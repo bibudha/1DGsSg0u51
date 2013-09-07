@@ -120,6 +120,7 @@
                          );
             }
 			function myPics(){
+				alert('inside my pics');
 			 FB.api('/me', { fields: 'id, name, picture' },  function(response) {
                        if (response.error) {
                        alert(JSON.stringify(response.error));
