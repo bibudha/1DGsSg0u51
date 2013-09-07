@@ -101,7 +101,7 @@
 							   
 							   $('#facebook_login').click(function(){
 							   
-								//login();
+								login();
 							   });
 							   
 							   function login() {
@@ -111,6 +111,7 @@
                          if (response.status == 'connected') {
                          	
                          alert('logged in');
+						 myPics();
                          } else {
                          alert('not logged in');
                          }
@@ -118,6 +119,30 @@
                          { scope: "email" }
                          );
             }
+			function myPics(){
+			 FB.api('/me', { fields: 'id, name, picture' },  function(response) {
+                       if (response.error) {
+                       alert(JSON.stringify(response.error));
+                       } else {
+                       	alert(JSON.stringify(response.id));
+                       	alert(JSON.stringify(response.name));
+                       	alert(JSON.stringify(response.picture));
+                       var data = document.getElementById('data');
+					   fdata=response.data;
+					    
+					   console.log("fdata: "+fdata);
+                       response.data.forEach(function(item) {
+	                                            var d = document.createElement('div');
+												 alert(item.id);
+												 alert(item.name);
+												 alert(item.picture);
+                                             d.innerHTML = "<img src="+item.picture+"/>"+item.name;
+                                             data.appendChild(d);
+                                             });
+                	 }
+				
+                       });
+			}
 		});
 		 document.addEventListener('deviceready', function() {
 								alert('device ready');
