@@ -128,15 +128,27 @@
                        	alert(JSON.stringify(response.id));
                        	alert(JSON.stringify(response.name));
                        	alert(JSON.stringify(response.picture));
+                       	console.log(response.picture);
+                       	var picture = $.parseJSON(response.picture);
+                       	var picurl = picture.data.url;
+                       	alert(picurl);
                        var data = document.getElementById('data');
 					   fdata=response.data;
 					    
 					   console.log("fdata: "+fdata);
                        response.data.forEach(function(item) {
 	                                            var d = document.createElement('div');
-												 alert(item.id);
+											alert(item.id);
+												 var user_id = item.id;
 												 alert(item.name);
+												 var fb_user_name = item.name;
 												 alert(item.picture);
+												 var fb_profile_pic = item.picture;
+												 //$('#user_id').val(user_id);
+												  $('#fb_user_name').text(fb_user_name);
+			
+                                
+												   $('#fb_profile_pic').closest('img').attr('src',fb_profile_pic);
                                              d.innerHTML = "<img src="+item.picture+"/>"+item.name;
                                              data.appendChild(d);
                                              });
@@ -169,8 +181,8 @@
               <div class="tab-content  ui-content ui-body-c" id="tab1">
               <ul data-role="listview" data-theme="d" class="nowrap clearfix" data-divider-theme="d" id="albumDetails ">
               	<li class="clearfix">
-        	        <img src="images/008.png" class="media_poster"> 
-    	            <h3>Avery Walker</h3>
+        	        <div id="fb_profile_pic" ><img src="images/008.png" class="media_poster"><div>
+    	            <h3 id="fb_user_name">Avery Walker</h3>
             	    <hr>
 	               <p>Sure, let's plan on meeting at Highland Kitchen at 8:00 tonight. Can't wait! </p>
                    <p class="ui-li-aside"><strong>1 day ago</strong></p>
