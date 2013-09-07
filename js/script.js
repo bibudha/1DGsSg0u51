@@ -531,10 +531,10 @@ function menuData(obj) {
 		//Event Tab2
 		//window.location.href="directions.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
 	}
-	if(featureId == 34){
-		//Fanwall2
-		//window.location.href="directions.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
-	}
+	if (featureId == 34) {
+        //callUSInfo(html);
+        window.location.href = "fanwall2.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId ;
+    }
     if (featureId == 35) {
         //aboutUSInfo(html);
         window.location.href = "aboutUSInfo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
