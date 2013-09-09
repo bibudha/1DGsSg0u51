@@ -100,10 +100,10 @@
                                });
 							   
 							   $('#facebook_login').click(function(){
-							   if($('#user_id').val()=='')
+							   if($('#user_id').val()!='')
 							   {
 							   	alert('should go on comment page');
-							   '<div id="go_to_comment_page"><a href="fanwall2-comments-inner.html?user_id='+user_id+'&profile_pic='+fb_profile_pic+'&user_name='+fb_user_name+'"></a></div>';
+							   '<div id="go_to_comment_page"><a href="fanwall2-comments-inner.html?user_id='+user_id+'&profile_pic='+fb_profile_pic+'&user_name='+fb_user_name'"></a></div>';
 							   $('#go_to_comment_page').trigger('click');
 							   }
 							   else
@@ -134,10 +134,9 @@
                        alert(JSON.stringify(response.error));
                        } else {
                        
-                       	var test = "\"JSON.stringify(response.id)\"";
-                         console.log(test);
-                        var user_id=test.replace(/\"/g, ""); 
-                       	alert('user_id='+user_id+);
+                       
+                        var user_id=JSON.stringify(response.id);
+                       	alert('user_id='+user_id);
                        	var fb_user_name= JSON.stringify(response.name);
                       
                        	var fb_pic = response.picture;
