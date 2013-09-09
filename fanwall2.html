@@ -131,7 +131,7 @@
                        	var fb_pic = response.picture;
                        	alert(fb_pic.data.url);
                        	var fb_profile_pic = fb_pic.data.url;
-			$('#fb_profile_pic').closest('img').attr('src',fb_profile_pic);			
+			$('#fb_profile_pic').html('<img src="'+fb_profile_pic+'"class="media_poster"/>');			
                       
 			 $('#fb_user_name').text(fb_user_name);		    
 					  
@@ -179,7 +179,7 @@
               <div class="tab-content  ui-content ui-body-c" id="tab1">
               <ul data-role="listview" data-theme="d" class="nowrap clearfix" data-divider-theme="d" id="albumDetails ">
               	<li class="clearfix">
-        	        <div id="fb_profile_pic" ><img src="images/008.png" class="media_poster"><div>
+        	        <div id="fb_profile_pic" ><!--<img src="images/008.png" class="media_poster">-->></div>
     	            <h3 id="fb_user_name">Avery Walker</h3>
             	    <hr>
 	               <p>Sure, let's plan on meeting at Highland Kitchen at 8:00 tonight. Can't wait! </p>
