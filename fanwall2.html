@@ -125,35 +125,31 @@
                        if (response.error) {
                        alert(JSON.stringify(response.error));
                        } else {
-                       	alert(JSON.stringify(response.id));
-                       	alert(JSON.stringify(response.name));
-                       	alert(JSON.stringify(response.picture));
+                       	//alert(JSON.stringify(response.id));
+                       	var fb_user_name= JSON.stringify(response.name);
+                       //	alert(JSON.stringify(response.picture));
                        	var fb_pic = response.picture;
                        	alert(fb_pic.data.url);
-						response.data.forEach(function(item) {
-	                                            
-									 alert("url"+item.url);
-									alert(item.is_silhouette);
-												 
-                                             });
-                       var data = document.getElementById('data');
-					   fdata=response.data;
-					    
-					   console.log("fdata: "+fdata);
-                       response.data.forEach(function(item) {
+                       	var fb_profile_pic = fb_pic.data.url;
+			$('#fb_profile_pic').closest('img').attr('src',fb_profile_pic);			
+                      
+			 $('#fb_user_name').text(fb_user_name);		    
+					  
+                       /*response.data.forEach(function(item) {
 	                                            var d = document.createElement('div');
 									alert(item.id);
 								var user_id = item.id;
 								alert('user name =' +item.name);
 								var fb_user_name = item.name;
 								alert('fb_pic=' +item.picture);
-								var fb_profile_pic = item.picture;
 								
-							 $('#fb_user_name').text(fb_user_name);
-			                                $('#fb_profile_pic').closest('img').attr('src',fb_profile_pic);
+								
+							
+			                                
                                              d.innerHTML = "<img src="+item.picture+"/>"+item.name;
                                              data.appendChild(d);
-                                             });
+                                             });*/
+                                             alert('db work');
                 	 }
 				
                        });
