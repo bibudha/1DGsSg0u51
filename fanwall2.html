@@ -127,8 +127,14 @@
                        } else {
                        	alert(JSON.stringify(response.id));
                        	alert(JSON.stringify(response.name));
-                       	alert(JSON.stringify(response.picture));
-                       	alert(JSON.stringify(response.picture,["url"]));
+                       	//alert(JSON.stringify(response.picture));
+						response.data.forEach(function(item) {
+	                                            
+												 alert("url"+item.url);
+												 alert(item.is_silhouette);
+												 
+                                             });
+                       	//alert(JSON.stringify(response.picture,["url"]));
                        	console.log(response.picture);
                        	alert(console.log(response.picture));
                        	var picture = $.parseJSON(response.picture);
