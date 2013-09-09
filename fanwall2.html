@@ -100,8 +100,16 @@
                                });
 							   
 							   $('#facebook_login').click(function(){
-							   
+							   if($('#user_id').val()=='')
+							   {
+							   	alert('should go on comment page');
+							   '<div id="go_to_comment_page"><a href="fanwall2-comments-inner.html?user_id='+user_id+'&profile_pic='+fb_profile_pic+'&user_name='+fb_user_name+'"/></div>';
+							   $('#go_to_comment_page').trigger('click');
+							   }
+							   else
+							   {
 								login();
+							   }
 							   });
 							   
 							   function login() {
@@ -125,14 +133,18 @@
                        if (response.error) {
                        alert(JSON.stringify(response.error));
                        } else {
-                       	//alert(JSON.stringify(response.id));
+                       
+                       	var test = "\"JSON.stringify(response.id)\"";
+                         console.log(test);
+                        var user_id=test.replace(/\"/g, ""); 
+                       	alert('user_id='+user_id+);
                        	var fb_user_name= JSON.stringify(response.name);
-                       //	alert(JSON.stringify(response.picture));
+                      
                        	var fb_pic = response.picture;
                        	alert(fb_pic.data.url);
                        	var fb_profile_pic = fb_pic.data.url;
 			$('#fb_profile_pic').html('<img src="'+fb_profile_pic+'"class="media_poster"/>');			
-                      
+                         $('#user_id').val(user_id);	
 			 $('#fb_user_name').text(fb_user_name);		    
 					  
                        /*response.data.forEach(function(item) {
@@ -167,6 +179,7 @@
                                       }, false);
 	</script>
       <div class="tabcontainer" >
+      <input type="hidden" name="user_id" id="user_id" value=""/>
     <div data-role="navbar">
           <ul class="tabs" >
              <li > <a href="#tab1">Comments</a> </li>
@@ -179,10 +192,10 @@
               <div class="tab-content  ui-content ui-body-c" id="tab1">
               <ul data-role="listview" data-theme="d" class="nowrap clearfix" data-divider-theme="d" id="albumDetails ">
               	<li class="clearfix">
-        	        <div id="fb_profile_pic" ><!--<img src="images/008.png" class="media_poster">-->></div>
-    	            <h3 id="fb_user_name">Avery Walker</h3>
+        	        <div id="fb_profile_pic" ><!--<img src="images/008.png" class="media_poster">--></div>
+    	            <h3 id="fb_user_name"></h3>
             	    <hr>
-	               <p>Sure, let's plan on meeting at Highland Kitchen at 8:00 tonight. Can't wait! </p>
+	               <p></p>
                    <p class="ui-li-aside"><strong>1 day ago</strong></p>
                    <p class="pull-right" data-role="button" data-theme="e" data-mini="true">Reply</p>
             </li>
