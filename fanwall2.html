@@ -33,16 +33,18 @@
 <script src="cordova.js"></script>
 <script src="cdv-plugin-fb-connect.js"></script>
 <script src="facebook-js-sdk.js"></script>
+<script src="js/script.js" type="text/javascript"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 	//alert('document ready');
 	    $("html").niceScroll();
+		
 		$('.bxslider').bxSlider({
 			auto:true,
 			pager: false,
 			controls:true
 		});
-		//getfanwall2data();
+		getfanwall2data();
 	
           
 	});
@@ -66,6 +68,7 @@
     <script type="text/javascript">
 		$(document).ready(function(){
 			//$ tab
+			
 			$(".tab-content").hide(); //Hide all content
 			$("ul.tabs li:first").find('a').addClass("active").show(); //Activate first tab
 			 $("ul.tabs li:first a").addClass("ui-btn-active") //Activate first tab
@@ -100,11 +103,10 @@
                                });
 							   
 							   $('#facebook_login').click(function(){
-							   if($('#user_id').val()!='')
+							   if($('#user_id').val()!=0)
 							   {
 							   	alert('should go on comment page');
-							   '<div id="go_to_comment_page"><a href="fanwall2-comments-inner.html?user_id='+user_id+'&profile_pic='+fb_profile_pic+'&user_name='+fb_user_name'"></a></div>';
-							   $('#go_to_comment_page').trigger('click');
+                              window.location.href='post_comments.html?siteId='+userSiteId+ '&featurerelId='+featureRelId+'&user_id='+user_id+'&fb_user_name='+fb_user_name+'&fb_profile_pic='+fb_profile_pic; 
 							   }
 							   else
 							   {
@@ -135,16 +137,18 @@
                        } else {
                        
                        
-                        var user_id=JSON.stringify(response.id);
+                        //var user_id=JSON.stringify(response.id);
+                        var user_id=response.id;
+						$('#user_id').val(user_id);
                        	alert('user_id='+user_id);
-                       	var fb_user_name= JSON.stringify(response.name);
-                      
+                       //	var fb_user_name= JSON.stringify(response.name);
+                       	var fb_user_name= response.name;
+						$("#fb_user_name").val(fb_user_name);
                        	var fb_pic = response.picture;
-                       	alert(fb_pic.data.url);
+                       //	alert(fb_pic.data.url);
                        	var fb_profile_pic = fb_pic.data.url;
-			$('#fb_profile_pic').html('<img src="'+fb_profile_pic+'"class="media_poster"/>');			
-                         $('#user_id').val(user_id);	
-			 $('#fb_user_name').text(fb_user_name);		    
+						$("#fb_profile_pic").val(fb_profile_pic);
+						//window.location.href='post_comments.html?siteId='+userSiteId+ '&featureId='+featureRelId+'&user_id='+user_id+'&fb_user_name='+fb_user_name+'&fb_profile_pic='+fb_profile_pic;
 					  
                        /*response.data.forEach(function(item) {
 	                                            var d = document.createElement('div');
@@ -178,7 +182,9 @@
                                       }, false);
 	</script>
       <div class="tabcontainer" >
-      <input type="hidden" name="user_id" id="user_id" value=""/>
+      <input type="hidden" name="user_id" id="user_id" value="0"/>
+      <input type="hidden" name="fb_profile_pic" id="fb_profile_pic" value=""/>
+      <input type="hidden" name="fb_user_name" id="fb_user_name" value=""/>
     <div data-role="navbar">
           <ul class="tabs" >
              <li > <a href="#tab1">Comments</a> </li>
@@ -189,17 +195,7 @@
           <div class="tab-body">
               
               <div class="tab-content  ui-content ui-body-c" id="tab1">
-              <ul data-role="listview" data-theme="d" class="nowrap clearfix" data-divider-theme="d" id="albumDetails ">
-              	<a href="post_comments.html"><li class="clearfix">
-        	        <div id="fb_profile_pic" ><!--<img src="images/008.png" class="media_poster">--></div>
-    	            <h3 id="fb_user_name"></h3>
-            	    <hr>
-	               <p></p>
-                   <p class="ui-li-aside"><strong>1 day ago</strong></p>
-                   <p class="pull-right" data-role="button" data-theme="e" data-mini="true">Reply</p>
-            </li>
-            </a>
-              </ul>
+              
               <span data-role="button"  data-mini="true">Load More</span>
               </div>
               
