@@ -1999,6 +1999,7 @@ var url = baseUrl + 'web/web/getFanwall2Post/' + featureRelId + '/' + userSiteId
 
 function getPreviousFbdata()
 {
+	
 var featureRelId = getUrlVars()['featurerelId'];
 var userSiteId = getUrlVars()['siteId'];
 var fbId = getUrlVars()['user_id'];
