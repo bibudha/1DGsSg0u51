@@ -106,7 +106,7 @@
 							   if($('#user_id').val()!=0)
 							   {
 							   	alert('should go on comment page');
-                              window.location.href='post_comments.html?siteId='+userSiteId+ '&featurerelId='+featureRelId+'&user_id='+user_id+'&fb_user_name='+fb_user_name+'&fb_profile_pic='+fb_profile_pic; 
+                              window.open(post_comments.html?'siteId='+userSiteId+ '&featurerelId='+featureRelId+'&user_id='+user_id+'&fb_user_name='+fb_user_name+'&fb_profile_pic='+fb_profile_pic); 
 							   }
 							   else
 							   {
@@ -158,13 +158,14 @@
 								var fb_user_name = item.name;
 								alert('fb_pic=' +item.picture);
 								
-								
+							
 							
 			                                
                                              d.innerHTML = "<img src="+item.picture+"/>"+item.name;
                                              data.appendChild(d);
                                              });*/
-                                             alert('db work');
+											 alert('db work');
+											 insertfanwall2data(user_id,fb_user_name,fb_profile_pic);	
                 	 }
 				
                        });
