@@ -2028,7 +2028,26 @@ alert(fbId);
 alert(fbName);
 alert(fbPic);
 }
-
+function insertfanwall2data(user_id,fb_user_name,fb_profile_pic){
+var featureRelId = getUrlVars()['featurerelId'];
+var userSiteId = getUrlVars()['siteId'];
+var user_id = getUrlVars()['user_id'];
+var fb_user_name = getUrlVars()['fb_user_name'];
+var fb_profile_pic = getUrlVars()['fb_profile_pic'];
+var commentdata=$('#comment_text').text();
+var url = baseUrl + 'web/web/insertFanwall2Post/' + featureRelId + '/' + userSiteId +'/' +user_id+ '/'+fb_user_name+'/'+fb_profile_pic+'/'+commentdata;
+ var data = '';
+ 
+    doAjaxCall(url, data, false, function (html) {
+        if (html==1) {
+            //$('#tab1').html('Sorry we have no data for fanwall tab');
+			alert('data inserted');
+			//getfanwall2data();
+        } else {
+		alert('data is not inserted');
+		}
+    });
+}
 /******************************/
 /*							*/
 /*	GLOBAL FUNCTIONS		*/
