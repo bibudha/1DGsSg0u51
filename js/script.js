@@ -2030,6 +2030,7 @@ alert('user_fb_name= '+user_fb_name);
 var fb_profile_pic = getUrlVars()['fb_profile_pic'];
 var orignal = fb_profile_pic.replace(new RegExp("^", "g"), '/');
 					           fb_profile_pic = encodeURIComponent(orignal);
+							   alert('after changing in insertion='+fb_profile_pic);
 		$('#userSIteId').val(userSiteId);
 		$('#featRelId').val(featureRelId);
 		$('#user_Fbid').val(user_id);
@@ -2037,10 +2038,13 @@ var orignal = fb_profile_pic.replace(new RegExp("^", "g"), '/');
 		$('#fb_user_name').val(user_fb_name);
 		$('#fb_user_name').val(user_fb_name);
 		$('#featureId').val(featureId);
+		
 var url = baseUrl + 'web/web/insertFanwall2Post';
+alert(url);
  var data = $('#frm_post').serialize();
- 
+ alert('data= '+data);
     doAjaxCall(url, data, false, function (html) {
+	alert('inside doAjaxCall');
         if (html==1) {
 		alert('data inserted');
 		window.location.href = "fanwall2.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId ;
