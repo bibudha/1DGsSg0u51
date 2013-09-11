@@ -24,19 +24,8 @@
 <script type="text/javascript">
 		$(document).bind("mobileinit", function() {
 		  $.mobile.defaultPageTransition = "slide";
-		  getfan2commentsinnerdata();
-	          alert($("#userSIteId").val());
-              alert($("#featureRelId").val());
-              var pic= $("#profile_pic").val();
-              var name=$("#userName").val();
-              var comment=$("#comment_text").val();
-			  alert(pic);
-			  alert(name);
-			  alert(comment);
-			  $('#user_name').val(name);
-			  $('#comment_text').val(comment);
-			  $('#Comment_pic').attr('src',pic);
-		})
+		  
+		});
 
 </script>
 <script src="js/jquery.nicescroll.min.js"></script>
@@ -53,7 +42,22 @@
 			pager: false,
 			controls:true
 		});
-		
+		getfan2commentsinnerdata();
+	          alert($("#userSIteId").val());
+              alert($("#featureRelId").val());
+              var pic= $("#profile_pic").val();
+              var name=$("#userName").val();
+              var comment=$("#comment_text").val();
+			  alert(pic);
+			  alert(name);
+			  alert(comment);
+			  $('#user_name').val(name);
+			  $('#comment_text').val(comment);
+			  $('#Comment_pic').attr('src',pic);
+			  $('#facebook_new_comment').click(function(){
+			    window.location.href="child_post_comments.html?siteId="+userSiteId+"&featurerelId="+featureRelId+"&comment_text="+comment;
+			  });
+			
 	});
 </script>
 
@@ -116,9 +120,9 @@
 		        <h5 class="nowrap">Choose Login Account</h5>
         	</div>
             <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content" >
-                    <a href="" data-role="button" data-theme="b">Facebook</a>
-                    <a href="" data-role="button" data-theme="b">Twitter</a>
-                    <a href="" data-role="button" data-theme="a" data-rel="back">Cancel</a>
+                    <li id="facebook_new_comment"><a href="" data-role="button" data-theme="b">Facebook</a></li>
+                    <li><a href="" data-role="button" data-theme="b">Twitter</a></li>
+                    <li><a href="" data-role="button" data-theme="a" data-rel="back">Cancel</a></li>
                     
             </div>
         </div>
