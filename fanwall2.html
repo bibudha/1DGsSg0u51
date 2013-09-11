@@ -107,7 +107,9 @@
 							   if($('#user_id').val()!=0)
 							   {
 							   	alert('should go on comment page');
-                              window.open(post_comments.html?'siteId='+userSiteId+ '&featurerelId='+featureRelId+'&user_id='+user_id+'&fb_user_name='+fb_user_name+'&fb_profile_pic='+fb_profile_pic); 
+                              //window.open(post_comments.html?'siteId='+userSiteId+ '&featurerelId='+featureRelId+'&user_id='+user_id+'&fb_user_name='+fb_user_name+'&fb_profile_pic='+fb_profile_pic); 
+                              window.location.href="post_comments.html?siteId="+userSiteId+"&featurerelId="+featureRelId+"&user_id="+user_id+"&fb_user_name="+fb_user_name+"&fb_profile_pic="+fb_profile_pic; 
+							  // window.location.href = "app_aroundus.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
 							   }
 							   else
 							   {
