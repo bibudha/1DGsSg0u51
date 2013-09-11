@@ -43,6 +43,8 @@
 			controls:true
 		});
 		$('comment_post').click(function(){
+		var comment=$('#comment_text').text();
+		$('#comment').val(comment);
 		insertfanwall2data();
 		});
 	});
@@ -92,7 +94,15 @@
                     
             </div>
         </div>
-
+<form action="" id="frm_post" name="frm_post">
+		  <input type="hidden" name="userSIteId" id="userSIteId" value=""/>
+		  <input type="hidden" name="featRelId" id="featRelId" value=""/>
+		  <input type="hidden" name="featureId" id="featureId" value=""/>
+			<input type="hidden" name="user_Fbid" id="user_Fbid" value=""/>
+		  <input type="hidden" name="fb_profile_pic" id="fb_profile_pic" value=""/>
+		  <input type="hidden" name="fb_user_name" id="fb_user_name" value=""/>
+		  <input type="hidden" name="comment" id="comment" value=""/>
+			</form>
 </div><!-- /page -->
 
 </body>
