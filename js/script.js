@@ -1510,7 +1510,7 @@ function geteventTab() {
                 } else {
                     className = 'oddbg';
                 }
-                data += '<li  class="' + className + '" ><a href="eventDetail.html?eventId=' + item.eventId + '&transferId=' + featureRelId + '&touchId=' + userSiteId + '&mId=' + featureId + '" rel="external"><img src="images/Event_icon.png" alt=""><h3>' + item.name + '</h3><span class="ui-li-month">' + item.month + '</span><span class="ui-li-day">' + item.date + '</span></a></li>';
+                data += '<li  class="' + className + '" ><a href="eventdetail.html?eventId=' + item.eventId + '&transferId=' + featureRelId + '&touchId=' + userSiteId + '&mId=' + featureId + '" rel="external"><img src="images/Event_icon.png" alt=""><h3>' + item.name + '</h3><span class="ui-li-month">' + item.month + '</span><span class="ui-li-day">' + item.date + '</span></a></li>';
                 if (item.error != '') {
 
                     error = item.error;
@@ -1973,6 +1973,7 @@ var userSiteId = getUrlVars()['touchId'];
 var featureId = getUrlVars()['mId'];
 $("#userSIteId").val(userSiteId);
 $("#featRelId").val(featureRelId);
+$("#featureId").val(featureId);
 var url = baseUrl + 'web/web/getFanwall2Post/' + featureRelId + '/' + userSiteId;
  var data = '';
  var htmlData="";
@@ -2000,24 +2001,7 @@ var url = baseUrl + 'web/web/getFanwall2Post/' + featureRelId + '/' + userSiteId
         getUserAppereance();
     });
 }
-/*function insertfanwall2data(user_id,fb_user_name,fb_profile_pic){
 
-var featureRelId = getUrlVars()['transferId'];
-var userSiteId = getUrlVars()['touchId'];
-var featureId = getUrlVars()['mId'];
-var url = baseUrl + 'web/web/insertFanwall2Post/' + featureRelId + '/' + userSiteId +'/' +user_id+ '/'+fb_user_name+'/'+fb_profile_pic;
- var data = '';
- var htmlData="";
-    doAjaxCall(url, data, false, function (html) {
-        if (html==1) {
-            //$('#tab1').html('Sorry we have no data for fanwall tab');
-			alert('data inserted');
-			//getfanwall2data();
-        } else {
-		alert('data is not inserted');
-		}
-    });
-}*/
 function getPreviousFbdata()
 {
 var featureRelId = getUrlVars()['featurerelId'];
@@ -2025,27 +2009,37 @@ var userSiteId = getUrlVars()['siteId'];
 var fbId = getUrlVars()['user_id'];
 var fbName = getUrlVars()['fb_user_name'];
 var fbPic = getUrlVars()['fb_profile_pic'];
+var featureId = getUrlVars()['featureId'];
 alert(featureRelId);
+alert(featureId);
 alert(userSiteId);
 alert(fbId);
 alert(fbName);
 alert(fbPic);
 }
-function insertfanwall2data(user_id,fb_user_name,fb_profile_pic){
+function insertfanwall2data(){
 var featureRelId = getUrlVars()['featurerelId'];
 var userSiteId = getUrlVars()['siteId'];
 var user_id = getUrlVars()['user_id'];
 var fb_user_name = getUrlVars()['fb_user_name'];
+var featureId = getUrlVars()['featureId'];
+var user_fb_name=fb_user_name.replace(/\%20/g,' ');
 var fb_profile_pic = getUrlVars()['fb_profile_pic'];
-var commentdata=$('#comment_text').text();
-var url = baseUrl + 'web/web/insertFanwall2Post/' + featureRelId + '/' + userSiteId +'/' +user_id+ '/'+fb_user_name+'/'+fb_profile_pic+'/'+commentdata;
- var data = '';
+		$('#userSIteId').val(userSiteId);
+		$('#featRelId').val(featureRelId);
+		$('#user_Fbid').val(user_id);
+		$('#fb_profile_pic').val(fb_profile_pic);
+		$('#fb_user_name').val(user_fb_name);
+		$('#fb_user_name').val(user_fb_name);
+		$('#featureId').val(featureId);
+var url = baseUrl + 'web/web/insertFanwall2Post';
+ var data = $('#frm_post').serialize();
  
     doAjaxCall(url, data, false, function (html) {
         if (html==1) {
-            //$('#tab1').html('Sorry we have no data for fanwall tab');
-			alert('data inserted');
-			//getfanwall2data();
+		alert('data inserted');
+		window.location.href = "fanwall2.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId ;
+
         } else {
 		alert('data is not inserted');
 		}
