@@ -108,27 +108,27 @@
 							   {
 							   var fb_id=$('#user_id').val();
 							   var fb_user_name= $("#fb_user_name").val();
+							   var userSiteId= $("#userSIteId").val();
+							   var featureRelId= $("#featRelId").val();
+							   var featureId= $("#featureId").val();
 								
 								var fb_profile_pic = $("#fb_profile_pic").val();
-								var user_siteid = $("#userSIteId").val();
-								var feat_relId = $("#featRelId").val();
-							  
-								
 							   	alert('should go on comment page');
-                              //window.open(post_comments.html?'siteId='+userSiteId+ '&featurerelId='+featureRelId+'&user_id='+user_id+'&fb_user_name='+fb_user_name+'&fb_profile_pic='+fb_profile_pic); 
-							   alert(user_siteid);
-							   alert(feat_relId);
+                             
+							   alert(userSiteId);
+							   alert(featureRelId);
 							   alert(fb_id);
 							   alert(fb_user_name);
 							   alert(fb_profile_pic);
 							   
-                              window.location.href="post_comments.html?siteId="+user_siteid+"&featurerelId="+feat_relId+"&user_id="+fb_id+"&fb_user_name="+fb_user_name+"&fb_profile_pic="+fb_profile_pic; 
-							 
+                              window.location.href="post_comments.html?siteId="+userSiteId+"&featurerelId="+featureRelId+"&user_id="+fb_id+"&fb_user_name="+fb_user_name+"&fb_profile_pic="+fb_profile_pic+"&featureId="+featureId; 
+							  
 							   }
 							   else
 							   {
 							   alert('else part');
 								login();
+								window.location.href="post_comments.html?siteId="+userSiteId+"&featurerelId="+featureRelId+"&user_id="+fb_id+"&fb_user_name="+fb_user_name+"&fb_profile_pic="+fb_profile_pic+"&featureId="+featureId; 
 							   }
 							   });
 							   
@@ -183,7 +183,7 @@
                                              d.innerHTML = "<img src="+item.picture+"/>"+item.name;
                                              data.appendChild(d);
                                              });*/
-											 alert('db work');
+										
 											// insertfanwall2data(user_id,fb_user_name,fb_profile_pic);	
                 	 }
 				
@@ -207,6 +207,7 @@
       <input type="hidden" name="featRelId" id="featRelId" value=""/>
       <input type="hidden" name="fb_profile_pic" id="fb_profile_pic" value=""/>
       <input type="hidden" name="fb_user_name" id="fb_user_name" value=""/>
+      <input type="hidden" name="featureId" id="featureId" value=""/>
     <div data-role="navbar">
           <ul class="tabs" >
              <li > <a href="#tab1">Comments</a> </li>
