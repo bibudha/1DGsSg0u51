@@ -1985,8 +1985,10 @@ var url = baseUrl + 'web/web/getFanwall2Post/' + featureRelId + '/' + userSiteId
 		
 		htmlData = '<ul data-role="listview" data-inset="false" data-divider-theme="d" id="albumDetails"  class="nowrap clearfix" >'
   			$.each(html,function(i,item){
-  				
-  			htmlData += '<li><a href="fanwall2-comments-inner.html?profile_pic='+ item.user_fb_profile_pic +'&userName=' + item.fb_user_name + '&userComment='+ item.comment_text+'&featureRelId='+featureRelId+'&userSIteId='+userSIteId+'" rel="external" ><img src="'+item.user_fb_profile_pic+'" class="media_poster"><h3>'+item.fb_user_name +'</h3><hr><p>'+item.comment_text+'</p> <p class="ui-li-aside"><strong>'+item.comment_date+'</strong></p><p class="pull-right" data-role="button" data-theme="e" data-mini="true">Reply</p></a></li>';
+  			var user_fb_profile_pic=item.user_fb_profile_pic;
+var orignal = user_fb_profile_pic.replace(new RegExp("/", "g"), '^');
+					user_fb_profile_pic = encodeURIComponent(orignal);			
+  			htmlData += '<li><a href="fanwall2-comments-inner.html?profile_pic='+user_fb_profile_pic +'&userName=' + item.fb_user_name + '&userComment='+ item.comment_text+'&featureRelId='+featureRelId+'&userSIteId='+userSIteId+'" rel="external" ><img src="'+item.user_fb_profile_pic+'" class="media_poster"><h3>'+item.fb_user_name +'</h3><hr><p>'+item.comment_text+'</p> <p class="ui-li-aside"><strong>'+item.comment_date+'</strong></p><p class="pull-right" data-role="button" data-theme="e" data-mini="true">Reply</p></a></li>';
   			});
   			htmlData +='</ul>'
 			
@@ -2026,6 +2028,8 @@ var featureId = getUrlVars()['featureId'];
 var user_fb_name=fb_user_name.replace(/\%20/g,' ');
 alert('user_fb_name= '+user_fb_name);
 var fb_profile_pic = getUrlVars()['fb_profile_pic'];
+var orignal = fb_profile_pic.replace(new RegExp("^", "g"), '/');
+					           fb_profile_pic = encodeURIComponent(orignal);
 		$('#userSIteId').val(userSiteId);
 		$('#featRelId').val(featureRelId);
 		$('#user_Fbid').val(user_id);
@@ -2051,6 +2055,8 @@ function getfan2commentsinnerdata(){
 var featureRelId = getUrlVars()['featureRelId'];
 var userSiteId = getUrlVars()['userSiteId'];
 var profile_pic = getUrlVars()['profile_pic'];
+var orignal = profile_pic.replace(new RegExp("^", "g"), '/');
+profile_pic = encodeURIComponent(orignal);		
 var userName = getUrlVars()['userName'];
 var comment_text = getUrlVars()['comment_text'];
 
