@@ -1997,24 +1997,7 @@ var url = baseUrl + 'web/web/getFanwall2Post/' + featureRelId + '/' + userSiteId
         getUserAppereance();
     });
 }
-function insertfanwall2data(user_id,fb_user_name,fb_profile_pic){
 
-var featureRelId = getUrlVars()['transferId'];
-var userSiteId = getUrlVars()['touchId'];
-var featureId = getUrlVars()['mId'];
-var url = baseUrl + 'web/web/insertFanwall2Post/' + featureRelId + '/' + userSiteId +'/' +user_id+ '/'+fb_user_name+'/'+fb_profile_pic;
- var data = '';
- var htmlData="";
-    doAjaxCall(url, data, false, function (html) {
-        if (html==1) {
-            //$('#tab1').html('Sorry we have no data for fanwall tab');
-			alert('data inserted');
-			//getfanwall2data();
-        } else {
-		alert('data is not inserted');
-		}
-    });
-}
 function getPreviousFbdata()
 {
 var featureRelId = getUrlVars()['featurerelId'];
