@@ -128,7 +128,7 @@
 							   {
 							   alert('else part');
 								login();
-								window.location.href="post_comments.html?siteId="+userSiteId+"&featurerelId="+featureRelId+"&user_id="+fb_id+"&fb_user_name="+fb_user_name+"&fb_profile_pic="+fb_profile_pic+"&featureId="+featureId; 
+								
 							   }
 							   });
 							   
@@ -165,26 +165,15 @@
 						$("#fb_user_name").val(fb_user_name);
                        	var fb_pic = response.picture;
                        //	alert(fb_pic.data.url);
+					   var userSiteId= $("#userSIteId").val();
+							   var featureRelId= $("#featRelId").val();
+							   var featureId= $("#featureId").val();
+					    var fb_id=$('#user_id').val();
                        	var fb_profile_pic = fb_pic.data.url;
 						$("#fb_profile_pic").val(fb_profile_pic);
-						//window.location.href='post_comments.html?siteId='+userSiteId+ '&featureId='+featureRelId+'&user_id='+user_id+'&fb_user_name='+fb_user_name+'&fb_profile_pic='+fb_profile_pic;
+				window.location.href="post_comments.html?siteId="+userSiteId+"&featurerelId="+featureRelId+"&user_id="+fb_id+"&fb_user_name="+fb_user_name+"&fb_profile_pic="+fb_profile_pic+"&featureId="+featureId; 
 					  
-                       /*response.data.forEach(function(item) {
-	                                            var d = document.createElement('div');
-									alert(item.id);
-								var user_id = item.id;
-								alert('user name =' +item.name);
-								var fb_user_name = item.name;
-								alert('fb_pic=' +item.picture);
-								
-							
-							
-			                                
-                                             d.innerHTML = "<img src="+item.picture+"/>"+item.name;
-                                             data.appendChild(d);
-                                             });*/
-										
-											// insertfanwall2data(user_id,fb_user_name,fb_profile_pic);	
+                  
                 	 }
 				
                        });
