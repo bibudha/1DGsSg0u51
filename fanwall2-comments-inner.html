@@ -24,6 +24,18 @@
 <script type="text/javascript">
 		$(document).bind("mobileinit", function() {
 		  $.mobile.defaultPageTransition = "slide";
+		  getfan2commentsinnerdata();
+	          alert($("#userSIteId").val());
+              alert($("#featureRelId").val());
+              var pic= $("#profile_pic").val();
+              var name=$("#userName").val();
+              var comment=$("#comment_text").val();
+			  alert(pic);
+			  alert(name);
+			  alert(comment);
+			  $('#user_name').val(name);
+			  $('#comment_text').val(comment);
+			  $('#Comment_pic').attr('src',pic);
 		})
 
 </script>
@@ -78,21 +90,21 @@
 		});
 	</script>
               <ul data-role="listview" data-theme="d" class="nowrap clearfix" data-divider-theme="d" id="albumDetails ">
-              	<li class="clearfix">
-        	       <img src="images/008.png" class="media_poster"> 
-                        <h3>Avery Walker</h3>
+              	<li class="clearfix" id="">
+        	       <img id="Comment_pic" src="images/008.png" class="media_poster"> 
+                        <h3 id="user_name"></h3>
                         <hr>
-                       <p>Sure, let's plan on meeting at Highland Kitchen at 8:00 tonight. Can't wait! </p>
+                       <p id="comment_text"></p>
                        <p class="ui-li-aside"><strong>1 day ago</strong></p>
                        <p class="pull-right" data-role="button" data-theme="e" data-mini="true">Reply</p>
-		                    <div class="S_comments">                    
+		                    <!--<div class="S_comments">                    
                             	<img src="images/008.png" width="50"> 
                                <h3>Avery Walker</h3>
                                 <hr>
                                <p>yes u are right!</p>
                                <p class="pull-left"><strong>1 minut ago</strong></p>
                                <p class="pull-right" data-role="button" data-theme="e" data-mini="true">Reply</p>
-		                    </div>            
+		                    </div> -->           
 				</li>
             
               </ul>
