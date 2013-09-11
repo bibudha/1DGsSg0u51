@@ -106,10 +106,24 @@
 							   alert('click');
 							   if($('#user_id').val()!=0)
 							   {
+							   var fb_id=$('#user_id').val();
+							   var fb_user_name= $("#fb_user_name").val();
+								
+								var fb_profile_pic = $("#fb_profile_pic").val();
+								var user_siteid = $("#userSIteId").val();
+								var feat_relId = $("#featRelId").val();
+							  
+								
 							   	alert('should go on comment page');
                               //window.open(post_comments.html?'siteId='+userSiteId+ '&featurerelId='+featureRelId+'&user_id='+user_id+'&fb_user_name='+fb_user_name+'&fb_profile_pic='+fb_profile_pic); 
-                              window.location.href="post_comments.html?siteId="+userSiteId+"&featurerelId="+featureRelId+"&user_id="+user_id+"&fb_user_name="+fb_user_name+"&fb_profile_pic="+fb_profile_pic; 
-							  // window.location.href = "app_aroundus.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+							   alert(user_siteid);
+							   alert(feat_relId);
+							   alert(fb_id);
+							   alert(fb_user_name);
+							   alert(fb_profile_pic);
+							   
+                              window.location.href="post_comments.html?siteId="+user_siteid+"&featurerelId="+feat_relId+"&user_id="+fb_id+"&fb_user_name="+fb_user_name+"&fb_profile_pic="+fb_profile_pic; 
+							 
 							   }
 							   else
 							   {
@@ -189,6 +203,8 @@
 	</script>
       <div class="tabcontainer" >
       <input type="hidden" name="user_id" id="user_id" value="0"/>
+      <input type="hidden" name="userSIteId" id="userSIteId" value=""/>
+      <input type="hidden" name="featRelId" id="featRelId" value=""/>
       <input type="hidden" name="fb_profile_pic" id="fb_profile_pic" value=""/>
       <input type="hidden" name="fb_user_name" id="fb_user_name" value=""/>
     <div data-role="navbar">
