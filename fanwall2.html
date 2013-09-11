@@ -103,6 +103,7 @@
                                });
 							   
 							   $('#facebook_login').click(function(){
+							   alert('click');
 							   if($('#user_id').val()!=0)
 							   {
 							   	alert('should go on comment page');
@@ -110,11 +111,13 @@
 							   }
 							   else
 							   {
+							   alert('else part');
 								login();
 							   }
 							   });
 							   
-							   function login() {
+			function login() {
+			alert('login');
                 FB.login(
                          function(response) {
 						 alert('got success');
