@@ -27,6 +27,7 @@
 		})
 
 </script>
+<script src="js/script.js"></script>
 <script src="js/jquery.nicescroll.min.js"></script>
 <script src="js/jquery.bxslider.js"></script>
 <script type="text/javascript" src="js/jquery.mobile-1.3.1.js"></script>
@@ -35,6 +36,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
+	//getPreviousFbdata();
 	    $("html").niceScroll();
 		$('.bxslider').bxSlider({
 			auto:true,
@@ -44,6 +46,8 @@
 		$('#post_comment').click(function(){
 		var child_comment=$('#comment_textArea').text();
 		alert('child_comment= '+child_comment);
+		$('#child_comment').val(child_comment);
+		insertchildfanwall2data();
 		});
 		
 	});
@@ -63,7 +67,11 @@
 </div>
 	<div data-role="content" style="padding:0">
 		<!-- post div start-->
-		
+		<style type="text/css">
+			.TextArea {
+				min-height:15em;
+			}
+		</style>
             <div class="TextArea" id="comment_textArea" contenteditable >
                         
             </div>
@@ -95,6 +103,8 @@
 			<input type="hidden" name="user_Fbid" id="user_Fbid" value=""/>
 		  <input type="hidden" name="fb_profile_pic" id="fb_profile_pic" value=""/>
 		  <input type="hidden" name="fb_user_name" id="fb_user_name" value=""/>
+		  <input type="hidden" name="comment_id" id="comment_id" value=""/>
+		  <input type="hidden" name="child_comment" id="child_comment" value=""/>
 			</form>
 
 </div><!-- /page -->
