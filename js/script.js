@@ -14,6 +14,10 @@ function getRsshtml() {
     var url = baseUrl + 'web/web/getTabs/' + userSite;
 
 }
+function featureNameTitle(featureName){
+	$('.header-content h1').text(featureName);
+	$('title').text(featureName);
+}
 function getLicenceData() {
     var stringData;
     var index;
@@ -33,9 +37,8 @@ function getLicenceData() {
         //alert(id);
         $('#userSiteId').val(id);
         //getMenuList();
-        //alert(id);
-        getUserAppereance();
         createMenu(id);
+        getUserAppereance();
     });
 }
 //set android deviceId for push notification 
@@ -64,31 +67,7 @@ var data = '';
 	});
 }
 // get user appereance
-function getUserAppereance() {
-    var stringData;
-    var index;
-    var id = '';
-    var val = $('#userSiteId').val();
-    if (val == null || val == undefined || val == '') {
-        $.get('licence.txt', function (data) {
-            var fileData = data.split('\n');
-            $.each(fileData, function (i, item) {
-                stringData = item.split(':');
-                $.each(stringData, function (j, str) {
-                    if (str == 'userSiteId') {
-                        index = j;
-                        id = stringData[index + 1]
-                    }
-                });
 
-            });
-            $('#userSiteId').val(id);
-            getUserAppereanceFinal(id);
-        });
-    } else {
-        getUserAppereanceFinal(val);
-    }
-}
 function getUserAppereanceFinal(userSite) {
 
     //var userSite = $('#userSiteId').val();
@@ -96,40 +75,37 @@ function getUserAppereanceFinal(userSite) {
     var data = '';
     var showMore = false;
     var cssClass = 'bottom';
-    var columnNum = 3;
-    //alert("appearance url "+url);
+    var columnNum = 4;
+    var appBtnTabBackground = '';
+    var appBtnTabColor = '';
+    var appBtnTabTextColor = '';
     doAjaxCall(url, data, false, function (html) {
         //console.log(html);
         if ($.isEmptyObject(html)) {
             $('#main-content').html('Sorry we Do Not Find YourWebsite Appreance');
         } else {
+		
             $.each(html, function (i, item) {
                 if (item.appBtnIconColor != '') {
                 }
-                if (item.appBtnTabBackground != '') {
-                    $('ul.Navigation_tabs li').css({ 'background': 'url(' + baseUrl + item.appBtnTabBackground + ')', 'background-size': '100% 100%' });
-                    //	alert($('ul.Navigation_tabs li').length);
-                }
-                if (item.appBtnTabColor != '') {
-                    $('ul.Navigation_tabs .coloroverlay').css({ 'background-color': "#" + item.appBtnTabColor + ' ', 'background-size': '100% 100%' });
-                } if (item.appBtnTabTextColor != '') {//alert(item.appBtnTabColor);
-                    $('ul.Navigation_tabs li a').css({ "color": "#" + item.appBtnTabTextColor });
-                }
+				appBtnTabBackground = item.appBtnTabBackground;
+				appBtnTabColor = item.appBtnTabColor;
+				appBtnTabTextColor = item.appBtnTabTextColor;
+              
                 if (item.appGlobalAppSectEvenRowBarColor != '') {
                     $(".evenbg").css("background-color", "#" + item.appGlobalAppSectEvenRowBarColor);
                 }
                 if (item.appGlobalAppSectEvenRowTextColor != '') {
-                    $(".evenbg h3").css("color", "#" + item.appGlobalAppSectEvenRowTextColor);
+                    $(".evenbg a").css("color", "#" + item.appGlobalAppSectEvenRowTextColor);
                 }
                 if (item.appGlobalAppSectOddRowBarColor != '') {
                     $(".oddbg").css("background-color", "#" + item.appGlobalAppSectOddRowBarColor);
                 }
                 if (item.appGlobalAppSectOddRowTextColor != '') {
-                    $(".oddbg h3").css("color", "#" + item.appGlobalAppSectOddRowTextColor);
+                    $(".oddbg a").css("color", "#" + item.appGlobalAppSectOddRowTextColor);
                 }
                 if (item.appGlobalAppNavBarColor != '') {
-
-                    if (item.appGlobalAppNavTextColor != '') {
+				    if (item.appGlobalAppNavTextColor != '') {
 
                         if (item.appHeaderGlobalImage != '') {
                             //alert(item.appBtnTabColor);
@@ -144,26 +120,30 @@ function getUserAppereanceFinal(userSite) {
                     $(".ui-li-divider").css("background", "#" + item.appGlobalAppNavBarColor);
                 }
                 if (item.appGlobalAppSectTextColor != '') {
-                    $(".ui-li-divider").css("color", "#" + item.appGlobalAppNavTextColor);
+                    $(".ui-li-divider").css("color", "#" + item.appGlobalAppSectTextColor);
                 }
                 if (item.appGlobalAppNavShadowColor != '') {
-                    // $('.header-content h1').css('text-shadow', "#" + item.appGlobalAppNavShadowColor + ' 1px 1px 0px');
+                    $('.header-content h1').css('text-shadow', "#" + item.appGlobalAppNavShadowColor + ' 1px 1px 0px');
                 }
                 if (item.appGlobalAppFeatureButtonColor != '') {
+				//	$('.ui-btn').css('background' , '#'+item.appGlobalAppFeatureButtonColor);
                 }
                 if (item.appGlobalAppFeatureButtonTextColor != '') {
+				//	$('.ui-btn-text').css('color' , '#'+item.appGlobalAppFeatureButtonTextColor);
 
                 } if (item.appGlobalAppFeatureTextColor != '') {
 
                 }
                 if (item.appGlobalFont != '') {
+				
+					$('*').css('font-family' , item.appGlobalFont);
 
                 } if (item.appGlobalThemeColor != '') {
 
                 } if (item.appHeaderColor != '') {
 
                 } if (item.appHeaderGlobalColor != '') {
-
+					$('.header-content').css('background-color' , '#'+item.appHeaderGlobalColor);
                 }
                 if (item.appHeaderImage != '') {
 
@@ -210,7 +190,19 @@ function getUserAppereanceFinal(userSite) {
         }
         if ($('#isHomePage').length > 0) {
             // this is to render menus dynamically only on index page
-            getMenuList(cssClass, columnNum, showMore, userSite);
+            getMenuList(cssClass, columnNum, showMore, userSite,function(){
+                //   alert($('ul.Navigation_tabs li').length);
+				  if (appBtnTabBackground != '') {
+					
+                    $('ul.Navigation_tabs li').css({ 'background': 'url(' + baseUrl + appBtnTabBackground + ')', 'background-size': '100% 100%' });
+                }
+                if (appBtnTabColor != '') {
+                    $('ul.Navigation_tabs li  .coloroverlay').css({ 'background-color': "#" + appBtnTabColor + ' ', 'background-size': '100% 100%' });
+                }
+				if (appBtnTabTextColor != '') {
+                    $('ul.Navigation_tabs li a').css({ "color": "#" + appBtnTabTextColor });
+                }
+				});
 
             createBackgroundSlider(html[0].appearanceId);
         }
@@ -218,11 +210,10 @@ function getUserAppereanceFinal(userSite) {
 
 }
 // getting user menu list
-function getMenuList(cssClass, columnNum, showMore, userSite) {
+function getMenuList(cssClass, columnNum, showMore, userSite ,callback) {
 
     // var userSite = $('#userSiteId').val();
-    var url = baseUrl + 'web/web/getTabs/' + userSite;
-    //alert("menu url "+url);
+    var url = baseUrl + 'web/web/getwebTabs/' + userSite +'/site';
     var data = '';
     // 
     // ajax calling
@@ -249,7 +240,7 @@ function getMenuList(cssClass, columnNum, showMore, userSite) {
 
                     if (i < (moreVisibility ? columnNum - 1 : columnNum)) {
 
-                        menuWithShowMore += '<li class="theme_1" onclick="menuData(this);"  featureRelId="' + item.featureRelId + '" featureId="' + item.featureId + '"  userSiteId="' + item.userSiteId + '" ><div class="coloroverlay"></div><a href="javascript:" ><div class="icon_img"><img src="' + baseUrl + 'assets/uploads/icons/' + item.image_name + '" width="30"/></div><span>' + item.featureName + '</span></a></li>';
+                        menuWithShowMore += '<li class="theme_1" onclick="menuData(this);" featureName="'+ item.featureName  +'" featureRelId="' + item.featureRelId + '" featureId="' + item.featureId + '"  userSiteId="' + item.userSiteId + '" ><div class="coloroverlay"></div><a href="javascript:" ><div class="icon_img"><img src="' + baseUrl + 'assets/uploads/icons/' + item.image_name + '" width="30"/></div><span>' + item.featureName + '</span></a></li>';
                     }
                 } else {
 
@@ -258,7 +249,7 @@ function getMenuList(cssClass, columnNum, showMore, userSite) {
                         menuHtml += "<li><ul class='Navigation_tabs primary'>";
                     }
 
-                    scrollableMenu += '<li class="theme_1" onclick="menuData(this);"  featureRelId="' + item.featureRelId + '" featureId="' + item.featureId + '"  userSiteId="' + item.userSiteId + '" ><div class="coloroverlay"></div><a href="javascript:" ><div class="icon_img"><img src="' + baseUrl + 'assets/uploads/icons/' + item.image_name + '" width="30"/></div><span>' + item.featureName + '</span></a></li>';
+                    scrollableMenu += '<li class="theme_1" onclick="menuData(this);" featureName="'+ item.featureName  +'"  featureRelId="' + item.featureRelId + '" featureId="' + item.featureId + '"  userSiteId="' + item.userSiteId + '" ><div class="coloroverlay"></div><a href="javascript:" ><div class="icon_img"><img src="' + baseUrl + 'assets/uploads/icons/' + item.image_name + '" width="30"/></div><span>' + item.featureName + '</span></a></li>';
 
                     if ((j % columnNum == 0 || i == (html.length - 1))) {
 
@@ -269,8 +260,8 @@ function getMenuList(cssClass, columnNum, showMore, userSite) {
             });
             if (showMore) {
                 if (moreVisibility) {
-
-                    menuWithShowMore += '<li class="more theme_1"><div class="coloroverlay"></div><a data-ajax="false" href="menu.htm?num=' + columnNum + '">   <div class="icon_img"><img src="images/nav-icon.png" width="30"></div>More...</a></li>';
+                      var newColumnNum=columnNum-1;
+                    menuWithShowMore += '<li class="more theme_1"><div class="coloroverlay"></div><a data-ajax="false" href="menu.htm?num=' + newColumnNum  + '">   <div class="icon_img"><img src="images/nav-icon.png" width="30"></div>More...</a></li>';
                 }
                 menuWithShowMore = '<ul class="Navigation_tabs primary ">' + menuWithShowMore + '</ul>';
                 menuHtml = menuWithShowMore;
@@ -297,7 +288,9 @@ function getMenuList(cssClass, columnNum, showMore, userSite) {
                 if (columnNum == 4) { $('.Navigation_tabs').addClass('Col4'); }
                 if (columnNum == 5) { $('.Navigation_tabs').addClass('Col5'); }
             }
-
+			if(callback){
+			callback();
+			}
         }
     });
 
@@ -305,7 +298,6 @@ function getMenuList(cssClass, columnNum, showMore, userSite) {
 
 
 }
-
 function createSlider(horizontal) {
     var mode = '';
     if (horizontal) {
@@ -379,14 +371,16 @@ function createBackgroundSlider(appearanceid) {
 }
 
 function createMenu(userSite) {
+//alert('createmenu');
     var num = getUrlVars()['num'];
     if (num == '' || num == null || num == undefined) {
         num = 0;
     }
+	
     //var userSite = $('#userSiteId').val();
     if ($('#menupage').length > 0) {
 
-        var url = baseUrl + 'web/web/getTabs/' + userSite;
+        var url = baseUrl + 'web/web/getwebTabs/' + userSite + '/site';
         var data = '';
         doAjaxCall(url, data, false, function (html) {
 
@@ -398,11 +392,12 @@ function createMenu(userSite) {
                 }
                 var k = i + 1;
                 if (k > num) {
-                    menuHtml += '<li class="' + className + '" onclick="menuData(this);"  featureRelId="' + item.featureRelId + '" featureId="' + item.featureId + '"  userSiteId="' + item.userSiteId + '" ><a href="javascript:" ><img class="ui-li-icon" src="' + baseUrl + 'assets/uploads/icons/' + item.image_name + '"/>' + item.featureName + '</a></li>';
+                    menuHtml += '<li class="' + className + '" onclick="menuData(this);" featureName="'+ item.featureName  +'" featureRelId="' + item.featureRelId + '" featureId="' + item.featureId + '"  userSiteId="' + item.userSiteId + '" ><a href="javascript:" ><img class="ui-li-icon" src="' + baseUrl + 'assets/uploads/icons/' + item.image_name + '"/>' + item.featureName + '</a></li>';
                 }
             });
             $('#liMenu').html(menuHtml);
             $("#liMenu").listview('refresh');
+			getUserAppereance();
         });
     }
 }
@@ -424,29 +419,33 @@ function addBackground(item) {
 
     }
 }
+
 // get menu data 
 function menuData(obj) {
 
     var featureRelId = $(obj).attr('featureRelId');
     var featureId = $(obj).attr('featureId');
+	var featureName = $(obj).attr('featurename');
     var menuhtml = $(obj).find('span').html();
     var userSiteId = $('#userSiteId').val();
     var backGroundColor;
     var textColor;
 
+
     if (featureId == 1) {
         //homeTabInfo(html);
-        window.location.href = "homeTabInfo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+        window.location.href = "homeTabInfo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId +"&featureName=" + featureName;
 
     }
     if (featureId == 2) {
         //gallaryImageInfo(html);
-        window.location.href = "gallaryImageInfo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+        window.location.href = "gallaryImageInfo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId +"&featureName=" + featureName;
 
     }
     if (featureId == 3) {
         //geteventTab(html);
-        window.location.href = "geteventTab.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+        window.location.href = "geteventTab.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId +"&featureName=" + featureName;
+
     }
 	 if (featureId == 4) {
         //QRCoupon Tab
@@ -459,7 +458,7 @@ function menuData(obj) {
 	
     if (featureId == 6) {
         //getfanwallTab(html);
-        window.location.href = "getfanwallTab.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+        window.location.href = "getfanwallTab.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId +"&featureName=" + featureName;
     }
 	 if (featureId == 7) {
         //Arround us Tab
@@ -468,15 +467,15 @@ function menuData(obj) {
     if (featureId == 8) {
         //artistInfoTab(html);
 
-        window.location.href = "artistInfTab.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+        window.location.href = "artistInfTab.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId +"&featureName=" + featureName;
     }
     if (featureId == 9) {
         //infoTab1Info(html);
-        window.location.href = "infoTab1Info.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+        window.location.href = "infoTab1Info.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId +"&featureName=" + featureName;
     }
     if (featureId == 10) {
         //locationTab(html);
-        window.location.href = "locationTab.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+        window.location.href = "locationTab.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId +"&featureName=" + featureName;
     }
 	if (featureId == 12) {
         //Tell a Friend
@@ -484,11 +483,11 @@ function menuData(obj) {
     }
     if (featureId == 14) {
         //webSiteInfo(html);
-        window.location.href = "webSiteInfo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+        window.location.href = "webSiteInfo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId +"&featureName=" + featureName;
     }
-    if (featureId == 16) {
+   if (featureId == 16) {
         //youtubeTabInfo(html);
-        window.location.href = "youtubeTabInfo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+        window.location.href = "youtubeTabInfo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId +"&featureName=" + featureName;
     }
 	if (featureId == 23) {
         //Car finder
@@ -511,17 +510,17 @@ function menuData(obj) {
 		//wofoo
         window.location.href = "app_wufoo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
     }
-    if (featureId == 29) {
+   if (featureId == 29) {
         //callUSInfo(html);
-        window.location.href = "callUSInfo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+        window.location.href = "callUSInfo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId +"&featureName=" + featureName;
     }
 	 if (featureId == 30) {
         //Changer;
         //window.location.href = "callUSInfo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
     }
 	if (featureId == 31) {
-        //deliver tab;
-        window.location.href = "deliver.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+        //callUSInfo(html);
+        window.location.href = "deliver.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId +"&featureName=" + featureName;
     }
 	if(featureId == 32){
 		//Direction view Tab
@@ -537,7 +536,7 @@ function menuData(obj) {
     }
     if (featureId == 35) {
         //aboutUSInfo(html);
-        window.location.href = "aboutUSInfo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+        window.location.href = "aboutUSInfo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId +"&featureName=" + featureName;
     }
 	if (featureId == 37) {
         //Loyalty Tab
@@ -546,11 +545,11 @@ function menuData(obj) {
     if (featureId == 38) {
         //NewsletterInfo(html);
 
-        window.location.href = "NewsletterInfo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+        window.location.href = "NewsletterInfo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId +"&featureName=" + featureName;
     }
     if (featureId == 39) {
         //menuTabInfo(html);
-        window.location.href = "menuTabInfo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+        window.location.href = "menuTabInfo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId +"&featureName=" + featureName;
     }
 	if (featureId == 40) {
         //PDF tab
@@ -566,12 +565,12 @@ function menuData(obj) {
     }
     if (featureId == 43) {
         //RssTabInfo(html);
-        window.location.href = "RssTabInfo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+        window.location.href = "RssTabInfo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId +"&featureName=" + featureName;
 
     }
     if (featureId == 44) {
         //sportTabInfo(html);
-        window.location.href = "sportTabInfo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+        window.location.href = "sportTabInfo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId +"&featureName=" + featureName;
     }
 	 if (featureId == 45) {
         //Tip calculator
@@ -594,16 +593,15 @@ function menuData(obj) {
         //window.location.href = "app_reservation.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
     }
 	if (featureId == 50) {
-        window.location.href = "food_home.html?transferId=" + featureRelId + "&touchId=" + userSiteId;
+        window.location.href = "food_home.html?transferId=" + featureRelId + "&touchId=" + userSiteId +"&featureName=" + featureName;
     }
-    if (featureId == 51) {
-		
-        window.location.href = "merchandise.html?transferId=" + featureRelId + "&touchId=" + userSiteId;
+     if (featureId == 51) {
+        window.location.href = "merchandise.html?transferId=" + featureRelId + "&touchId=" + userSiteId +"&featureName=" + featureName;
     }
 	
-    if (featureId == 52) {
+     if (featureId == 52) {
         //infoTab3Info(html);
-        window.location.href = "infoTab3Info.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+        window.location.href = "infoTab3Info.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId +"&featureName=" + featureName;
     }
 
     $('#lastClick').val(featureRelId);
@@ -629,34 +627,27 @@ function aboutUSInfo() {
         if ($.isEmptyObject(html)) {
             $('#main-content').html('Sorry we have an Empty data');
         } else {
-		
             var backGroundColor, textColor;
             var data = '<ul data-role="listview" data-inset="false" data-divider-theme="d" id="aboutclass">';
 			
             $.each(html, function (i, item) {
-			
-                if (item.parentId != 0) {
-                   // data += '<li data-role="list-divider">' + item.section + '</li>';
+                if (item.parentId == 0) {
+                    data += '<li data-role="list-divider">' + item.section + '</li>';
                     if (i % 2 == 0) {
                         className = 'evenbg';
                     } else {
                         className = 'oddbg';
                     }
-					//}
-                   // data += '<li class="'+className+'"><a href="AboutUsDescription.html?itemId=' + item.itemId + '&touchId=' + userSiteId + '&featureName=' + item.featureName + '" rel="external" >' + item.name + '</a></li>';
-				  
+                    data += '<li class="'+className+'"><a href="AboutUsDescription.html?itemId=' + item.itemId + '&touchId=' + userSiteId + '&featureName=' + item.name + '" rel="external" >' + item.name + '</a></li>';
                     $.each(html, function (i, innerItem) {
-					
                         if (item.itemId == innerItem.parentId) {
                             //alert('child'+innerItem.itemId);
-							 
-                            data += '<li><a href="AboutUsDescription.html?itemId=' + item.itemId + '&touchId=' + userSiteId + '&featureName=' +featureName+'" rel="external"><img src="'+baseUrl+innerItem.thumbnail+'"class="ul-li-thumb" height="100" width="100"/><h2 class="ul-li-heading">' + innerItem.section + '</h2></a></li>';
+                            data += '<li><a href="AboutUsDescription.html?itemId=' + item.itemId + '&touchId=' + userSiteId + '" rel="external">' + innerItem.name + '&featureName=' + item.name +'</a></li>';
                         }
                     })
                 }
                 backGroundColor = item.globalBackground;
                 textColor = item.globalTextColor;
-				
                 $('#main-content').css({ 'background-color': '#' + backGroundColor, 'color': '#' + textColor });
             })
             data += '</ul>';
@@ -854,7 +845,7 @@ function infoTab3Info() {
 			 var mobileBackground
             $.each(html, function (i, item) {
 			//featureName = item.featureName;
-				//alert(item.catImage);
+				//alert(featureName);
 			   mobileBackground = item.mobileBackground;
                 if (i == 0) { addBackground(item); }
                 if (i % 2 == 0) {
@@ -865,7 +856,7 @@ function infoTab3Info() {
 			
 			 
                 data += '<li  data-role="list-divider">' + item.catSection + '</li>';
-                data += '<li class="' + className + '"><a  rel="external" href="infotab3category.html?&categoryId=' + item.categoryId + '&info3id=' + item.info3id + '&mId=' + featureId + '&transferId=' + featureRelId + '&touchId=' + userSiteId + '&featureName=' + item.catName + '"><img src="'+baseUrl+item.catImage+'"height="80" width="80" class="ui-li-thumb"/><h2 class="ui-li-heading">' + item.catName + '</h2></a></li>';
+                data += '<li class="' + className + '"><a  rel="external" href="infotab3category.html?&categoryId=' + item.categoryId + '&info3id=' + item.info3id + '&mId=' + featureId + '&featureRelId=' + featureRelId + '&touchId=' + userSiteId + '&featureName=' + item.catName + '">' + item.catName + '</a></li>';
                 backGroundColor = item.globalBackground;
                 textColor = item.globalTextColor;
                 $('#main-content').css({ 'background-color': '#' + backGroundColor, 'color': '#' + textColor });
@@ -882,6 +873,32 @@ function infoTab3Info() {
         getUserAppereance();
     });
 }
+function getUserAppereance() {
+	//alert('appreance');
+    var stringData;
+    var index;
+    var id = '';
+    var val = $('#userSiteId').val();
+    if (val == null || val == undefined || val == '') {
+        $.get('licence.txt', function (data) {
+            var fileData = data.split('\n');
+            $.each(fileData, function (i, item) {
+                stringData = item.split(':');
+                $.each(stringData, function (j, str) {
+                    if (str == 'userSiteId') {
+                        index = j;
+                        id = stringData[index + 1]
+                    }
+                });
+
+            });
+            $('#userSiteId').val(id);
+            getUserAppereanceFinal(id);
+        });
+    } else {
+        getUserAppereanceFinal(val);
+    }
+}
 function getInfo3Data() {
     var featureRelId = getUrlVars()['transferId'];
     var userSiteId = getUrlVars()['touchId'];
@@ -895,9 +912,8 @@ function getInfo3Data() {
 
     var menuhtml = $("#btn").find('a').html();
     //var userSiteId = $('#userSiteId').val();
-    var url = baseUrl + 'web/web/getInfotabList/' + categoryId + '/' + info3id;
+    var url = baseUrl + 'web/web/getInfotabList/' + categoryId + '/' + info3id + '/' + userSiteId;
     var data = '';
-	
     doAjaxCall(url, data, false, function (html) {
         //console.log(html);
         var backGroundColor, textColor;
@@ -906,8 +922,7 @@ function getInfo3Data() {
 			 var mobileBackground
             $.each(html, function (i, item) {
 			//featureName = item.featureName;
-			
-				//alert(item.thumbnail);
+				//alert(featureName);
 			   mobileBackground = item.mobileBackground;
                 if (i == 0) { addBackground(item); }
                 if (i % 2 == 0) {
@@ -919,7 +934,7 @@ function getInfo3Data() {
 			
                 data += '<li data-role="list-divider">' + item.section + '</li>';
 				
-                data += '<li class="'+className+'"><a href="infotab3description.html?itemId=' + item.itemId + '&touchId=' + userSiteId + '&featureName=' + item.name + '" rel="external"><img src="'+baseUrl+item.thumbnail+'"width="80" height="80"class="ui-li-thumb" /><h2 class="ui-li-heading">' + item.name + '<h2></a></li>';
+                data += '<li class="'+className+'"><a href="infotab3description.html?itemId=' + item.itemId + '&touchId=' + userSiteId + '&featureName=' + item.name + '" rel="external">' + item.name + '</a></li>';
                 $.each(html, function (i, innerItem) {
                     if (item.itemId == innerItem.parentId) {
                         //alert('child'+innerItem.itemId);
@@ -997,18 +1012,23 @@ function menuTabInfo() {
 
             var data = '<ul data-role="listview" data-inset="false" data-divider-theme="d" id="aboutclass">';
             $.each(html, function (i, item) {
-           //alert(item.menuId);
-		   //alert(item.parentId);
-                        if (item.menuId == item.parentId) {
+
+                if (i == 0) {
+                    data += '<li data-role="list-divider">' + item.section + '</li>';
+                    data += '<li><a href="menuDescription.html?id=' + item.menuId + '&transferId=' + featureRelId + '&touchId=' + userSiteId + '&mId=' + featureId + '&featureName=' + item.name + '" rel="external" >' + item.name + '<p class="ui-li-aside"><strong>' + item.price + '</strong></p></a></li>';
+                    $.each(html, function (i, innerItem) {
+                        if (item.menuId == innerItem.parentId) {
                             //alert('child'+innerItem.itemId);
                             if (i % 2 == 0) {
                                 className = 'evenbg';
                             } else {
                                 className = 'oddbg';
                             }
-                            data += '<li class="' + className + '"><a href="menuDescription.html?id=' + item.menuId + '&transferId=' + featureRelId + '&touchId=' + userSiteId + '&mId=' + featureId +'&featureName=' + featureName + '" rel="external"><img src="'+baseUrl+item.thumbnail+'" width="80" height="80" class="ul-li-thumb"/><h2 class="ul-li-heading">' + item.name + '</h2><p class="ui-li-aside"><strong>' + item.price + '</strong></p></a></li>';
+                            data += '<li class="' + className + '"><a href="menuDescription.html?id=' + item.menuId + '&transferId=' + featureRelId + '&touchId=' + userSiteId + '&mId=' + featureId +'&featureName=' + innerItem.name + '" rel="external">' + innerItem.name + '<p class="ui-li-aside"><strong>' + item.price + '</strong></p></a></li>';
                         }
-                   
+                    })
+                }
+
             })
             data += '</ul>';
             $('#main-content').html(data);
@@ -1039,43 +1059,14 @@ function getMenuDesc() {
 
     var menuhtml = $(id).find('a').text();
     doAjaxCall(url, data, false, function (html) {
-	if($.isEmptyObject(html))
-	{
-	$('#main-content').html('Sorry we have an Empty data');
-	}
-	else
-	{
-	//var data = '<ul data-role="listview" data-inset="false" data-divider-theme="d" id="aboutclass">';
-	        $.each(html,function(i,item){
-	           if(id==item.menuId)
-	             {
-	                    if (i % 2 == 0) {
-                                className = 'evenbg';
-                            } else {
-                                className = 'oddbg';
-                            }
-	               data += '<ul class="' + className + '">' + item.description + '</h2></ul>';
-                  backGroundColor = item.globalBackground;
-				 textColor = item.globalTextColor;
-                   }
-	
-	})
-	//data += '</ul>';
-	//$('title,.header-content h1').html(menuhtml);
-	   $('#main-content').html(data);
-	    $('.header-content .back').show();
-        $('#main-content').css({ 'background-color': '#' + backGroundColor, 'color': '#' + textColor });
-	}
-	});
-	
-	
+        //console.log(html);
         //$('title,.header-content h1').html(menuhtml);
-     
-        //backGroundColor = html[0].globalBackground;
-        //textColor = html[0].globalTextColor;
+        $('#main-content').html(html[0].description);
+        backGroundColor = html[0].globalBackground;
+        textColor = html[0].globalTextColor;
         $('.header-content .back').show();
-        //$('#main-content').css({ 'background-color': '#' + backGroundColor, 'color': '#' + textColor });
-    
+        $('#main-content').css({ 'background-color': '#' + backGroundColor, 'color': '#' + textColor });
+    });
 	
 	getUserAppereance();
 }
@@ -1105,24 +1096,17 @@ function artistInfoTab() {
                 textColor = item.globalTextColor;
                 description = item.description;
                 featureName = item.featureName;
-				thumbnail=item.thumbnail;
-				
-				data='<li ><div  class="ui-btn-text" style="font-family: Courier;"><img src="'+baseUrl+thumbnail+'" width="80" height="80" alt="" rel="external" class="ui-li-thumb" style="margin-top: -29px"><h3 class="align-center">'+description+'</h3></div> </li>';
-				
             })
             if (description == '') {
                 $('#main-content').html('Sorry We Have An Empty Data');
             } else {
-                $('#main-content').html(data);
-				
+                $('#main-content').html(description);
 				featureNameTitle(featureName);
 			
 				 getUserAppereance();
 				
 			}
             $('#main-content').css({ 'background-color': '#' + backGroundColor, 'color': '#' + textColor });
-			
-			
         }
        
     });
@@ -1346,14 +1330,7 @@ function homeTabInfo() {
                 popdata += '</p></div>';
             });
             popdata += '</div></div>';
-			
             //popdata += '</div> </div>';
-			$.each(html, function (i, item) {
-			var mbackground=item.mobileBackground;
-			//alert(mbackground);
-			$('body').css('background-image','url('+baseUrl+mbackground+')');
-			});
-			
             $('.header-content').html(data);
             $('#main-content').html(popdata);
             $('div[data-role="popup"]').trigger('create');
@@ -1385,19 +1362,17 @@ function youtubeTabInfo() {
 
     var data = '';
     doAjaxCall(url, data, false, function (html) {
-
+        //alert('inside do ajax');
         if ($.isEmptyObject(html)) {
             $('#main-content').html('Sorry we have an info Tab data');
         } else {
             var data = '';
             youtubeTemp = html;
-
+            
             $.each(html, function (i, item) {
+			alert(item.chanelName);
                 if (i == 0) { addBackground(item); }
                 data += '<div class="youtube align-center" onclick="showYouTubeVideo(this);" videoId="' + item.videoId + '"><a href="javascript:"><img src="http://img.youtube.com/vi/' + item.videoId + '/1.jpg" width="320" height="200" /></a><br><div style="text-overflow:ellipsis;white-space: nowrap; overflow: hidden; text-align:center !important;"><strong>' + item.title + '</strong></div></div>';
-				mobileBackground=item.mobileBackground;
-				
-				$(body).css('background-image','url('+baseUrl+mobileBackground+')');
             })
             $('#main-content').html(data);
             $('#main-content').trigger('create');
@@ -1615,11 +1590,6 @@ function gallaryImageInfo() {
     });
 
 }
-
-
-
-
-
 function RssTabInfo() {
 
     var featureRelId = getUrlVars()['transferId'];
@@ -1632,11 +1602,10 @@ function RssTabInfo() {
     var url = baseUrl + 'web/web/getMenuHtml/' + featureId + '/' + featureRelId + '/' + userSiteId;
 
     var data = '';
-	
     doAjaxCall(url, data, false, function (html) {
-        
+        //alert('fdsaf');
         if ($.isEmptyObject(html)) {
-            $('#main-content').html('Sorry we do not have an RSS Tab data');
+            $('#main-content').html('Sorry we have an Podcast Tab data');
         } else {
           //  console.log(html);
             var data = '';
@@ -1648,14 +1617,11 @@ function RssTabInfo() {
             var image = '';
           //  var featureName = '';
             var i = 1;
-			//alert('else condition');
-			 //var mobileBackground
+			 var mobileBackground
             $.each(html, function (i, item) {
 			//featureName = item.featureName;
 				//alert(featureName);
 			   mobileBackground = item.mobileBackground;
-			  
-			  
                 if (i == 0) { addBackground(item); }
                 if (i % 2 == 0) {
                     className = 'evenbg';
@@ -1676,15 +1642,14 @@ function RssTabInfo() {
 
                     error = item.error;
                 }
-                 $(body).css('background-image','url(" '+ baseUrl + mobileBackground + '")' );
 
             });
             data += '</ul>';
         }
-		
+		$('body').css({ 'background-image': 'url(" '+ baseUrl + mobileBackground + '")' });
         $('#main-content').html(data);
 			
-	$(body).css('background-image','url(" '+ baseUrl + mobileBackground + '")' );
+	
 		if (error) {
             $('#main-content').html(error);
         }
@@ -1846,7 +1811,7 @@ function callUSInfo() {
     var userSiteId = getUrlVars()['touchId'];
     var featureId = getUrlVars()['mId'];
     var url = baseUrl + 'web/web/getMenuHtml/' + featureId + '/' + featureRelId + '/' + userSiteId;
-
+	var featureName = '';
     var data = '';
     doAjaxCall(url, data, false, function (html) {
         console.log(html);
@@ -1862,10 +1827,12 @@ function callUSInfo() {
                 } else {
                     className = 'oddbg';
                 }
+				featureName = item.featureName;
                 //data += '<li class="' + className + '" onclick="getcallData(' + item.callusId + ',' + featureId + ',' + userSiteId + ',' + featureRelId + ',this)"><a href="#popupcallus" data-position-to="window" data-rel="popup" ><h3>' + item.title + '</h3></a></li>';
                 data += '<li class="' + className + '"><a href="tel:' + item.phoneNo + '" ><h3>' + item.title + '</h3></a></li>';
             })
             data += '</ul>';
+				featureNameTitle(featureName);
             $('#main-content').html(data);
             try {
                 $("#callclass").listview('refresh');
@@ -1924,17 +1891,19 @@ function getfanwallTab() {
     var url = baseUrl + 'web/web/getMenuHtml/' + featureId + '/' + featureRelId + '/' + userSiteId;
 
     var data = '';
+    var featureName = '';
     doAjaxCall(url, data, false, function (html) {
         if ($.isEmptyObject(html)) {
             $('#main-content').html('Sorry we have no data for fanwall tab');
         } else {
             var val = "getfanwallData();";
             $('#addSteps').attr('onclick', val);
-
+			featureName = html[0].featureName;
 
             var data = '';
 
             $('#main-content').html(data);
+			featureNameTitle(featureName);
             try {
                 $("#callclass").listview('refresh');
             } catch (e) {
@@ -2143,7 +2112,6 @@ function doAjaxCall(url, data, showLoading, callback) {
     if (showLoading) {
         $('.loadingDiv').show();
     }
-    //alert(url);
     $.ajax({
         url: url,
         type: "POST",
@@ -2156,11 +2124,7 @@ function doAjaxCall(url, data, showLoading, callback) {
                 $('.loadingDiv').hide();
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
-        	//alert("error"+html);
-        	/*alert(xhr.responseText);
-        	alert(xhr.status);
-        	alert(thrownError);*/
+        error: function (html) {
             //console.log(html);
         }
     });
@@ -2441,16 +2405,15 @@ function deliverInfoTab() {
 //show map for deliver tab
 function showMap() {
 
-    var website = getUrlVars()['website'];
-	 var email = getUrlVars()['email'];
-	  var telephone = getUrlVars()['telephone'];
-	   var featureRelId = getUrlVars()['transferId'];
-	    var userSiteId = getUrlVars()['touchId'];
-		 var featureId = getUrlVars()['mId'];
-
-	   var lat = getUrlVars()['lat'];
-	   var long = getUrlVars()['long']; location
-    var userLocation = getUrlVars()['location'];
+		var website = getUrlVars()['website'];
+		var email = getUrlVars()['email'];
+		var telephone = getUrlVars()['telephone'];
+		var featureRelId = getUrlVars()['transferId'];
+		var userSiteId = getUrlVars()['touchId'];
+		var featureId = getUrlVars()['mId'];
+		var lat = getUrlVars()['lat'];
+		var longi = getUrlVars()['long']; location
+		var userLocation = getUrlVars()['location'];
     if (lat == '' || lat == undefined || lat == null) {
         userLocation = ' another location';
     }
@@ -2466,12 +2429,12 @@ function showMap() {
         var html = "";
         html += "<div style='padding:10px'><h4>Points showing <strong>your current location</strong> and <strong>and entered location</strong></h4> </div>";
 		
-		var showButton='<div data-role="controlgroup" data-type="horizontal"> <a href="tel:'+telephone+'" data-role="button"  data-iconpos="top">Call us</a>  <a rel="external" href="detail.html?id=0&transferId='+featureRelId+'&touchId=' + userSiteId + '&mId=' + featureId + '&return_url=' + website + '" data-role="button" data-iconpos="top">Website</a>   <a rel="external" href="mailto:'+email+'?Subject=share location?body=latitude is '+lat+' and longitude is '+long+'" data-role="button"  data-iconpos="top">Email</a></div>';
+		var showButton='<div data-role="controlgroup" data-type="horizontal"> <a href="tel:'+telephone+'" data-role="button"  data-iconpos="top">Call us</a>  <a rel="external" href="detail.html?id=0&transferId='+featureRelId+'&touchId=' + userSiteId + '&mId=' + featureId + '&return_url=' + website + '" data-role="button" data-iconpos="top">Website</a>   <a rel="external" href="mailto:'+email+'?Subject=share location?body=latitude is '+lat+' and longitude is '+longi+'" data-role="button"  data-iconpos="top">Email</a></div>';
         $('#direction-detail').html(html);
 		$('#direction-buttons').html(showButton);
       
 	  $('#map_canvas').gmap().bind('init', function (evt, map) {
-			var Position2 = new google.maps.LatLng(lat, long);
+			var Position2 = new google.maps.LatLng(lat, longi);
 		$('#map_canvas').gmap('addMarker', { 'position': Position2, 'bounds': true }).click(function () {
 		$('#map_canvas').gmap('openInfoWindow', { 'content': '<div>' + userLocation + '</div>' }, this);
 		});
@@ -2495,12 +2458,76 @@ function showMap() {
 		$('#main-content').html(html);
     }
 
-
+getUserAppereance();
  try {
                 $("#main-content").trigger('create');
             } catch (e) {
                 $("#main-content").listview();
             }
+}
+function NewsletterInfo() {
+    var featureRelId = getUrlVars()['transferId'];
+    var userSiteId = getUrlVars()['touchId'];
+    var featureId = getUrlVars()['mId'];
+		var featureName = getUrlVars()['featureName'];
+	featureName = featureName.replace(/\%20/g,' ');
+	featureNameTitle(featureName);
+	
+    var url = baseUrl + 'web/web/getMenuHtml/' + featureId + '/' + featureRelId + '/' + userSiteId;
+
+    var data = '';
+    doAjaxCall(url, data, false, function (html) {
+        if ($.isEmptyObject(html)) {
+            $('#main-content').html('Sorry we have an info Tab data');
+        } else {
+            var data = '<h3 class="align-center">Sign up for our newsletter</h3><label for="name">Name</label><input type="text" id="name" ><label for="email">email</label><input type="email" id="email" ><br>';
+
+            $.each(html, function (i, item) {
+                if (i == 0) { addBackground(item); }
+                data += '<label for="slider' + item.categoryId + '">' + item.categoryName + '</label><select name="slider' + item.categoryId + '" id="slider' + item.categoryId + '" data-role="slider" data-mini="true"><option class="ui-btn-up-b" value="off">No</option><option class="ui-btn-up-b" value="on">Yes</option></select>';
+            });
+            var newsletterEmail;
+            var newsletterMessage;
+            data += '<div class="sendNewsletterdetails"><input type="submit" value="Join"></div>';
+            $('#main-content').html(data);
+            $('#main-content').trigger('create');
+
+            $('.sendNewsletterdetails').click(function () {
+
+                var name = $('#name').val();
+                var email = $('#email').val();
+                email = email.replace('@', '-');
+                var url = baseUrl + 'web/web/newsletterentry/' + name + '/' + email + '/';
+                data = '{"employees": [';
+                var more = '';
+                var categoryvalue = '';
+                $.each(html, function (i, item) {
+
+                    if (more == 1) {
+                        data += ',';
+                    }
+                    categoryvalue = $('#slider' + item.categoryId).val();
+                    data += '{ "categoryId":"' + item.categoryId + '" , "value":"' + categoryvalue + '" }';
+                    more = 1;
+
+                });
+
+                data += ']}';
+                data = $.parseJSON(data);
+                //	data = {"employees": [{ "ram":"asdfasdf" , "value":"fdasf" },{ "ramasd":"asdfasdasdf" , "valasdue":"fasddasf" }]};
+                doAjaxCall(url, data, true, function (html) {
+                    if (html == 1) {
+                        alert('data submited');
+                    } else {
+                        alert('some error occured');
+                    }
+                });
+
+            });
+
+        }
+        getUserAppereance();
+    });
 }
 
 //direction view tab
@@ -2927,7 +2954,7 @@ function emailFormsubmission() {
 	    getUserAppereance();
 	}
 	
-	function EmailColorFormat (theme_content_background_color,theme_title_font_family,theme_form_color,theme_form_text_shadow,theme_section_color,theme_section_text_shadow,theme_section_border_top_color,theme_main_label_font_family,theme_main_label_color,theme_main_label_text_shadow,theme_detail_label_font_family,theme_detail_label_color,theme_detail_label_text_shadow,theme_input_font_family,theme_input_background_color,theme_input_color,theme_input_text_shadow,theme_radio_font_family,theme_radio_background_color,theme_radio_border_color,theme_radio_shadow_color,theme_submit_font_family,theme_submit_background_color,theme_submit_border_color,theme_submit_text_shadow,theme_submit_color)
+		function EmailColorFormat (theme_content_background_color,theme_title_font_family,theme_form_color,theme_form_text_shadow,theme_section_color,theme_section_text_shadow,theme_section_border_top_color,theme_main_label_font_family,theme_main_label_color,theme_main_label_text_shadow,theme_detail_label_font_family,theme_detail_label_color,theme_detail_label_text_shadow,theme_input_font_family,theme_input_background_color,theme_input_color,theme_input_text_shadow,theme_radio_font_family,theme_radio_background_color,theme_radio_border_color,theme_radio_shadow_color,theme_submit_font_family,theme_submit_background_color,theme_submit_border_color,theme_submit_text_shadow,theme_submit_color)
 	{	
 		$("#Elements").css({"background":"#"+theme_content_background_color});
 		$("#form_Title, #form_Desc").css("font-family", theme_title_font_family);
@@ -2956,7 +2983,7 @@ function emailFormsubmission() {
 		$("#Elements li .ui-radio .ui-btn-text, #Elements li .ui-checkbox .ui-btn-text").css("font-family", theme_radio_font_family);
 		$("#Elements .ui-submit .ui-btn-text").css("font-family", theme_submit_font_family);
 		getUserAppereance();
- }	
+ }
 
 	
 
