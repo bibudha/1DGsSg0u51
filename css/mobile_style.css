@@ -4478,10 +4478,17 @@ border-color:#444 transparent #333;
 	border:1px solid #777;
 	margin:10px 0px;
 	text-shadow:none;
-	
-	
 }
 
+.TextArea {
+	min-height:15em;
+	background: #FFF;
+	color: #222;
+	padding: 5px;
+	}
+@media screen (min-height:960px) and (orientation: portrait){
+	.TextArea {min-height:560px;}
+}
 @media all and (min-width: 28em){
 .mortgage {
 	width:70%;
