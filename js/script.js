@@ -1975,6 +1975,7 @@ $("#userSIteId").val(userSiteId);
 $("#featRelId").val(featureRelId);
 $("#featureId").val(featureId);
 var url = baseUrl + 'web/web/getFanwall2Post/' + featureRelId + '/' + userSiteId;
+alert(url);
  var data = '';
  var htmlData="";
     doAjaxCall(url, data, false, function (html) {
@@ -2004,7 +2005,7 @@ user_fb_profile_pic = user_fb_profile_pic.replace(new RegExp("/", "g"), '^');
     });
 }
 
-function getPreviousFbdata()
+/*function getPreviousFbdata()
 {
 var featureRelId = getUrlVars()['featurerelId'];
 var userSiteId = getUrlVars()['siteId'];
@@ -2018,7 +2019,7 @@ alert(userSiteId);
 alert(fbId);
 alert(fbName);
 alert(fbPic);
-}
+}*/
 function insertfanwall2data(){
 var featureRelId = getUrlVars()['featurerelId'];
 var userSiteId = getUrlVars()['siteId'];
@@ -2028,13 +2029,14 @@ var featureId = getUrlVars()['featureId'];
 var user_fb_name=fb_user_name.replace(/\%20/g,' ');
 alert('user_fb_name= '+user_fb_name);
 var fb_profile_pic = getUrlVars()['fb_profile_pic'];
-fb_profile_pic = fb_profile_pic.replace(new RegExp("^", "g"), '/');
+alert(fb_profile_pic);
+fb_profile_picc = fb_profile_pic.replace(new RegExp("^", "g"), '/');
 					           //fb_profile_pic = encodeURIComponent(orignal);
-							   alert('after changing in insertion='+fb_profile_pic);
+							   alert('after changing in insertion='+fb_profile_picc);
 		$('#userSIteId').val(userSiteId);
 		$('#featRelId').val(featureRelId);
 		$('#user_Fbid').val(user_id);
-		$('#fb_profile_pic').val(fb_profile_pic);
+		$('#fb_profile_pic').val(fb_profile_picc);
 		$('#fb_user_name').val(user_fb_name);
 		$('#fb_user_name').val(user_fb_name);
 		$('#featureId').val(featureId);
