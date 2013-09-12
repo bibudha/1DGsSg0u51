@@ -213,7 +213,7 @@ function getUserAppereanceFinal(userSite) {
 function getMenuList(cssClass, columnNum, showMore, userSite ,callback) {
 
     // var userSite = $('#userSiteId').val();
-    var url = baseUrl + 'web/web/getwebTabs/' + userSite +'/site';
+    var url = baseUrl + 'web/web/getTabs/' + userSite +'/site';
     var data = '';
     // 
     // ajax calling
@@ -380,7 +380,7 @@ function createMenu(userSite) {
     //var userSite = $('#userSiteId').val();
     if ($('#menupage').length > 0) {
 
-        var url = baseUrl + 'web/web/getwebTabs/' + userSite + '/site';
+        var url = baseUrl + 'web/web/getTabs/' + userSite + '/site';
         var data = '';
         doAjaxCall(url, data, false, function (html) {
 
