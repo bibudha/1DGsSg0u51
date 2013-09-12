@@ -104,28 +104,11 @@
 							   
 							   $('#facebook_login').click(function(){
 							   alert('click');
-							   if($('#user_id').val()!=0)
-							   {
-							   var fb_id=$('#user_id').val();
-							   var fb_user_name= $("#fb_user_name").val();
-							   var userSiteId= $("#userSIteId").val();
-							   var featureRelId= $("#featRelId").val();
-							   var featureId= $("#featureId").val();
-								
-								var fb_profile_pic = $("#fb_profile_pic").val();
-					 fb_profile_pic = fb_profile_pic.replace(/\//g,'^');
-					           //fb_profile_pic = encodeURIComponent(orignal);
-							   	alert('should go on comment page');
-                             
-							   alert(userSiteId);
-							   alert(featureRelId);
-							   alert(fb_id);
-							   alert(fb_user_name);
-							   alert(fb_profile_pic);
-							   
-                              window.location.href="post_comments.html?siteId="+userSiteId+"&featurerelId="+featureRelId+"&user_id="+fb_id+"&fb_user_name="+fb_user_name+"&fb_profile_pic="+fb_profile_pic+"&featureId="+featureId; 
-							  
-							   }
+							   FB.getLoginStatus(function(response) {
+                                  if (response.status == 'connected') {
+                                  alert('logged in');
+                              	   myPics();
+                                  } 
 							   else
 							   {
 							   alert('else part');
