@@ -1945,11 +1945,10 @@ $("#userSIteId").val(userSiteId);
 $("#featRelId").val(featureRelId);
 $("#featureId").val(featureId);
 var url = baseUrl + 'web/web/getFanwall2Post/' + featureRelId + '/' + userSiteId;
-alert(url);
+//alert(url);
  var data = '';
  var htmlData="";
     doAjaxCall(url, data, false, function (html) {
-		alert('inside ajax');
         if ($.isEmptyObject(html)) {
             $('#tab1').html('Sorry we have no data for fanwall tab');
 			alert('sorry there is no post');
@@ -1957,7 +1956,6 @@ alert(url);
 		var user_fb_profile_pic="";
 		htmlData = '<ul data-role="listview" data-inset="false" data-divider-theme="d" id="albumDetails"  class="nowrap clearfix" >'
   			$.each(html,function(i,item){
-			alert(item.comment_id);
   			 user_fb_profile_pic=item.user_fb_profile_pic;
 user_fb_profile_pic = user_fb_profile_pic.replace(/\//g,'^');
 					//user_fb_profile_pic = encodeURIComponent(orignal);			
@@ -1999,12 +1997,12 @@ var user_id = getUrlVars()['user_id'];
 var fb_user_name = getUrlVars()['fb_user_name'];
 var featureId = getUrlVars()['featureId'];
 var user_fb_name=fb_user_name.replace(/\%20/g,' ');
-alert('user_fb_name= '+user_fb_name);
+//alert('user_fb_name= '+user_fb_name);
 var fb_profile_pic = getUrlVars()['fb_profile_pic'];
-alert(fb_profile_pic);
+//alert(fb_profile_pic);
 var fb_profile_picc = fb_profile_pic.replace(/\^/g,'/');
 					           //fb_profile_pic = encodeURIComponent(orignal);
-							   alert('after changing in insertion='+fb_profile_picc);
+							   //alert('after changing in insertion='+fb_profile_picc);
 		$('#userSIteId').val(userSiteId);
 		$('#featRelId').val(featureRelId);
 		$('#user_Fbid').val(user_id);
@@ -2014,11 +2012,11 @@ var fb_profile_picc = fb_profile_pic.replace(/\^/g,'/');
 		$('#featureId').val(featureId);
 		
 var url = baseUrl + 'web/web/insertFanwall2Post';
-alert(url);
+//alert(url);
  var data = $('#frm_post').serialize();
- alert('data= '+data);
+ //alert('data= '+data);
     doAjaxCall(url, data, false, function (html) {
-	alert('inside doAjaxCall');
+	//alert('inside doAjaxCall');
         if (html==1) {
 		alert('data inserted');
 		window.location.href = "fanwall2.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId ;
@@ -2092,12 +2090,12 @@ var user_id = getUrlVars()['user_id'];
 var fb_user_name = getUrlVars()['fb_user_name'];
 var comment_id = getUrlVars()['comment_id'];
 var user_fb_name=fb_user_name.replace(/\%20/g,' ');
-alert('user_fb_name= '+user_fb_name);
+//alert('user_fb_name= '+user_fb_name);
 var fb_profile_pic = getUrlVars()['fb_profile_pic'];
-alert(fb_profile_pic);
+//alert(fb_profile_pic);
 var fb_profile_picc = fb_profile_pic.replace(/\^/g,'/');
 					           
-							   alert('after changing in insertion='+fb_profile_picc);
+							   //alert('after changing in insertion='+fb_profile_picc);
 		$('#userSIteId').val(userSiteId);
 		$('#featRelId').val(featureRelId);
 		$('#user_Fbid').val(user_id);
@@ -2105,15 +2103,16 @@ var fb_profile_picc = fb_profile_pic.replace(/\^/g,'/');
 		$('#fb_user_name').val(user_fb_name);
 		$('#comment_id').val(comment_id);
 		var comment_text =$('#child_comment').val();
-		
+	var data = $('#frm_post').serialize();
+alert(comment_id);	
 var url = baseUrl + 'web/web/insertchildFanwall2Post/'+comment_id;
-alert(url);
- var data = $('#frm_post').serialize();
- alert('data= '+data);
+//alert(url);
+ 
+ //alert('data= '+data);
     doAjaxCall(url, data, false, function (html) {
 	alert('inside doAjaxCall');
         if (html==1) {
-		alert('data inserted');
+		//alert('data inserted');
 		window.location.href = "fanwall2-comments-inner.html?profile_pic="+fb_profile_pic +"&userName="+ user_fb_name + "&userComment="+ comment_text+"&featureRelId="+featureRelId+"&userSIteId="+userSiteId+"&comment_id="+comment_id;
 
         } else {
