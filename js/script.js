@@ -1959,7 +1959,7 @@ var url = baseUrl + 'web/web/getFanwall2Post/' + featureRelId + '/' + userSiteId
   			 user_fb_profile_pic=item.user_fb_profile_pic;
 user_fb_profile_pic = user_fb_profile_pic.replace(/\//g,'^');
 					//user_fb_profile_pic = encodeURIComponent(orignal);			
-  			htmlData += '<li><a href="fanwall2-comments-inner.html?profile_pic='+user_fb_profile_pic +'&userName=' + item.fb_user_name + '&userComment='+ item.comment_text+'&featureRelId='+featureRelId+'&userSIteId='+userSiteId+'&comment_id='+item.comment_id+'" rel="external" ><img src="'+item.user_fb_profile_pic+'" class="media_poster"><h3>'+item.fb_user_name +'</h3><hr><p>'+item.comment_text+'</p> <p class="ui-li-aside"><strong>'+item.comment_date+'</strong></p><p class="pull-right" data-role="button" data-theme="e" data-mini="true">Reply</p></a></li>';
+  			htmlData += '<li><a href="fanwall2-comments-inner.html?&featureRelId='+featureRelId+'&userSIteId='+userSiteId+'&comment_id='+item.comment_id+'" rel="external" ><img src="'+item.user_fb_profile_pic+'" class="media_poster"><h3>'+item.fb_user_name +'</h3><hr><p>'+item.comment_text+'</p> <p class="ui-li-aside"><strong>'+item.comment_date+'</strong></p><p class="pull-right" data-role="button" data-theme="e" data-mini="true">Reply</p></a></li>';
   			});
   			htmlData +='</ul>'
 			
@@ -2027,55 +2027,45 @@ var url = baseUrl + 'web/web/insertFanwall2Post';
     });
 }
 function getfan2commentsinnerdata(){
-
-//alert("hello");
 var featureRelId = getUrlVars()['featureRelId'];
-//alert(featureRelId);
 var userSiteId = getUrlVars()['userSIteId'];
-//alert(userSiteId);
-var profile_pic = getUrlVars()['profile_pic'];
 var comment_id = getUrlVars()['comment_id'];
-//alert(comment_id);
- profile_pic = profile_pic.replace(/\^/g,'/');
- //alert(profile_pic);
-
-var userName = getUrlVars()['userName'];
-userName = userName.replace(/\%20/g,' ');
-//alert(userName);
-var comment_text = getUrlVars()['userComment'];
-//alert(comment_text);
-
 $('#usersiteIdd').val(userSiteId);
-//alert('sachin='+sachin);
 $("#featureRelId").val(featureRelId);
-$("#profile_pic").val(profile_pic);
-$("#userName").val(userName);
-$("#comment_text").val(comment_text);
 $("#comment_id").val(comment_id);
  var htmlData="";
- htmlData = '<ul data-role="listview" data-inset="false" data-divider-theme="d" id="albumDetails"  class="nowrap clearfix" >'
-  			
-  				
-  			htmlData += '<li><img src="'+profile_pic+'" class="media_poster"><h3>'+userName+'</h3><hr><p>'+comment_text+'</p> <p class="ui-li-aside"><strong>'+'comment_date'+'</strong></p><p class="pull-right" data-role="button" data-theme="e" data-mini="true">Reply</p></li>';
  var url = baseUrl + 'web/web/getFanwall2subcommentPost/' + featureRelId + '/' + userSiteId + '/' +comment_id; 			
 
- var data = $('#sub_comment').serialize();
+ var data = "";
     doAjaxCall(url, data, false, function (html) {
         if ($.isEmptyObject(html)) {
             $('#tab1').html('Sorry we have no data for fanwall tab');
-			alert('sorry there is no comment post');
-			htmlData +='</ul>'
+			//alert('sorry there is no comment post');
+
         } else {
-		$.each(html,function(i,item){			
-  			htmlData += '<li><img src="'+item.user_fb_profile_pic+'" class="media_poster"><h3>'+item.fb_user_name +'</h3><hr><p>'+item.sub_comment_text+'</p> <p class="ui-li-aside"><strong>'+item.comment_date+'</strong></p><p class="pull-right" data-role="button" data-theme="e" data-mini="true">Reply</p></li>';
+		$.each(html,function(i,item){	
+		alert(item.parent_id);
+			if(item.parent_id == 0 )
+				{
+				$("#image_media").attr('src',item.user_fb_profile_pic);
+				$("#user_name").html(item.fb_user_name);
+				$("#comment_textt").html(item.comment_text);
+				$("#comment_date").html(item.comment_date);
+				}
+			else
+				{
+				htmlData += '<div><img src="'+item.user_fb_profile_pic+'" class="media_poster"><h3>'+item.fb_user_name +'</h3><hr><p>'+item.comment_text+'</p> <p class="ui-li-aside"><strong>'+item.comment_date+'</strong></p></div>';
+				}
+							
   			});
-  			htmlData +='</ul>'
+
 			
            
         }
 		$('#tab1').html(htmlData);	
   		 try {
         $("#albumDetails").listview('refresh');
+        
   		} catch (e) {
   			$("#albumDetails").listview();
   		}
@@ -2090,12 +2080,8 @@ var user_id = getUrlVars()['user_id'];
 var fb_user_name = getUrlVars()['fb_user_name'];
 var comment_id = getUrlVars()['comment_id'];
 var user_fb_name=fb_user_name.replace(/\%20/g,' ');
-//alert('user_fb_name= '+user_fb_name);
 var fb_profile_pic = getUrlVars()['fb_profile_pic'];
-//alert(fb_profile_pic);
 var fb_profile_picc = fb_profile_pic.replace(/\^/g,'/');
-					           
-							   //alert('after changing in insertion='+fb_profile_picc);
 		$('#userSIteId').val(userSiteId);
 		$('#featRelId').val(featureRelId);
 		$('#user_Fbid').val(user_id);
@@ -2104,16 +2090,11 @@ var fb_profile_picc = fb_profile_pic.replace(/\^/g,'/');
 		$('#comment_id').val(comment_id);
 		var comment_text =$('#child_comment').val();
 	var data = $('#frm_post').serialize();
-alert(comment_id);	
 var url = baseUrl + 'web/web/insertchildFanwall2Post/'+comment_id;
-//alert(url);
- 
- //alert('data= '+data);
     doAjaxCall(url, data, false, function (html) {
-	alert('inside doAjaxCall');
         if (html==1) {
 		//alert('data inserted');
-		window.location.href = "fanwall2-comments-inner.html?profile_pic="+fb_profile_pic +"&userName="+ user_fb_name + "&userComment="+ comment_text+"&featureRelId="+featureRelId+"&userSIteId="+userSiteId+"&comment_id="+comment_id;
+		window.location.href = "fanwall2-comments-inner.html?&featureRelId="+featureRelId+"&userSIteId="+userSiteId+"&comment_id="+comment_id;
 
         } else {
 		alert('data is not inserted');
