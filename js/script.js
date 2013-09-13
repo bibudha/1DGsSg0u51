@@ -1949,6 +1949,7 @@ alert(url);
  var data = '';
  var htmlData="";
     doAjaxCall(url, data, false, function (html) {
+		alert('inside ajax');
         if ($.isEmptyObject(html)) {
             $('#tab1').html('Sorry we have no data for fanwall tab');
 			alert('sorry there is no post');
@@ -1956,6 +1957,7 @@ alert(url);
 		var user_fb_profile_pic="";
 		htmlData = '<ul data-role="listview" data-inset="false" data-divider-theme="d" id="albumDetails"  class="nowrap clearfix" >'
   			$.each(html,function(i,item){
+			alert("item.comment_id");
   			 user_fb_profile_pic=item.user_fb_profile_pic;
 user_fb_profile_pic = user_fb_profile_pic.replace(/\//g,'^');
 					//user_fb_profile_pic = encodeURIComponent(orignal);			
