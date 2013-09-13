@@ -4486,6 +4486,7 @@ border-color:#444 transparent #333;
 	color: #222;
 	padding: 5px;
 	}
+.S_comments {clear:both}	
 @media screen (min-height:960px) and (orientation: portrait){
 	.TextArea {min-height:560px;}
 }
