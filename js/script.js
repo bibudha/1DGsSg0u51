@@ -459,7 +459,7 @@ function menuData(obj) {
 	
     if (featureId == 6) {
         //getfanwallTab(html);
-        window.location.href = "getfanwallTab.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId +"&featureName=" + featureName;
+        window.location.href = "getfanwallTab.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
     }
 	 if (featureId == 7) {
         //Arround us Tab
