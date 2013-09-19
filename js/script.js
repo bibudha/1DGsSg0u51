@@ -1,5 +1,5 @@
 var Host = document.domain;
-var baseUrl = (Host == 'localhost') ? 'http://localhost:8080/mobileApps/mobileApp/' : 'http://198.50.99.226/~admin/';
+var baseUrl = 'http://198.50.99.226/~admin/';
 
 var menuLength;
 var MenuLimit = 4;		// global set accrding to theme
